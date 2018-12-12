@@ -12,9 +12,9 @@ The Flask-based REST API is generated using [OpenAPI Generator](https://openapi-
 - openapi-generator 3.3.4+
 
 ## Usage
-Get the requirements:
+Get the dependencies:
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 Adapt the IN variable to point to your ontology instance and run the model-to-model transformation:
@@ -34,4 +34,5 @@ Run the model-to-text generation:
 If you want to use or extend our toolchain, please consider citing the related publications:
 
 [1] Noura M., Heil S., Gaedke M. (2018) GrOWTH: Goal-Oriented End User Development for Web of Things Devices. In: Mikkonen T., Klamma R., Hernández J. (eds) Web Engineering. ICWE 2018. Lecture Notes in Computer Science, vol 10845. Springer, Cham
+
 [2] TODO
