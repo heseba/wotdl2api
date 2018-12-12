@@ -1,2 +1,6 @@
 /.idea/*
 /flask_out/*
+api.raml
+api.yaml
+config.json
+*.bak
