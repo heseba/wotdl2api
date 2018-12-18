@@ -485,7 +485,8 @@ content:
 ###  http://www.tu-chemnitz.de/vsr/ontology#Sensor1
 :Sensor1 rdf:type owl:NamedIndividual ,
                   :Sensor ;
-         :hasMeasurement :Measurement1 .
+         :hasMeasurement :Measurement1 ;
+         :name "LightSensor1"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#Shades
