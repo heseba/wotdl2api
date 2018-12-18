@@ -19,6 +19,9 @@ REPLACEMENT = """
     function = inspect.currentframe()
     function_name = function.f_code.co_name
     arguments = function.f_code.co_varnames[0:function.f_code.co_argcount]
+    kwargs = {}
+    for argument in arguments:
+        kwargs[argument] = function.f_locals[argument]
     source_code = inspect.getsource(function.f_code)
     comments = StringIO(source_code)
     
@@ -27,8 +30,9 @@ REPLACEMENT = """
     matches = pattern.search(strings[0].strip('"'))
     request = matches.group(1)
     device = matches.group(2)
-    
-    return hub.invoke_implementation(function_name, arguments, request, device)
+       
+    return hub.invoke_implementation(function_name, kwargs, request, device)
+ 
 """
 
 
