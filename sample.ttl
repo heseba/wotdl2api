@@ -84,31 +84,18 @@
 #    Data properties
 #################################################################
 
-###  #value
-<#value> rdf:type owl:DatatypeProperty ;
-         rdfs:domain :FixedValueEffect ,
-                     :PreCondition ;
-         rdfs:range rdfs:Literal .
-
-###  #timeToEffect
-<#timeToEffect> rdf:type owl:DatatypeProperty ;
-                rdfs:domain :Effect ;
-                rdfs:range xsd:positiveInteger ;
-                rdfs:comment "The duration it takes for the desired effect to take place" .
-
-
-###  #waitAfterActuation
-<#waitAfterActuation> rdf:type owl:DatatypeProperty ;
-                      rdfs:domain :Actuation ;
-                      rdfs:range xsd:positiveInteger .
-
-
 ###  http://www.tu-chemnitz.de/vsr/ontology#decrement
 :decrement rdf:type owl:DatatypeProperty ;
            rdfs:domain :DecreaseEffect ;
            rdfs:range xsd:decimal ,
                       xsd:double ,
                       xsd:float .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#httpBody
+:httpBody rdf:type owl:DatatypeProperty ;
+          rdfs:comment "OpenAPI 3.0 compliant body specification" ;
+          rdfs:seeAlso "https://swagger.io/docs/specification/describing-request-body/" .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#httpMethod
@@ -141,6 +128,13 @@
         rdfs:range xsd:string .
 
 
+###  http://www.tu-chemnitz.de/vsr/ontology#timeToEffect
+:timeToEffect rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Effect ;
+              rdfs:range xsd:positiveInteger ;
+              rdfs:comment "The duration it takes for the desired effect to take place" .
+
+
 ###  http://www.tu-chemnitz.de/vsr/ontology#type
 :type rdf:type owl:DatatypeProperty ;
       rdfs:domain :CompositeDevice ,
@@ -152,6 +146,19 @@
 :url rdf:type owl:DatatypeProperty ;
      rdfs:domain :HttpRequest ;
      rdfs:range xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#value
+:value rdf:type owl:DatatypeProperty ;
+       rdfs:domain :FixedValueEffect ,
+                   :PreCondition ;
+       rdfs:range rdfs:Literal .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#waitAfterActuation
+:waitAfterActuation rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Actuation ;
+                    rdfs:range xsd:positiveInteger .
 
 
 #################################################################
@@ -244,282 +251,16 @@
 #    Individuals
 #################################################################
 
-
-#################################################################
-#    Instances for a TV with two actuators: turn off and turn on 
-#################################################################
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TV
-:TV rdf:type owl:NamedIndividual ,
-             :CompositeDevice ;
-    :hasActuator :TvActuator ;
-    :name "samsungtv"^^xsd:string ;
-    :type "tv"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvActuator
-:TvActuator rdf:type owl:NamedIndividual ,
-                     :Actuator ;
-            :hasTransition :TvOffTransition ,
-                           :TvOnTransition ;
-            :name "samsungTV"^^xsd:string .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOffTransition
-:TvOffTransition rdf:type owl:NamedIndividual ,
-                          :Transition ;
-                 :hasActuation :TvOff ;
-                 :hasEffect :DecreaseNoise ,
-                            :TurnTvOff ;
-                 :hasPreCondition :TvOffPC .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOff
-:TvOff rdf:type owl:NamedIndividual ,
-                :HttpRequest ;
-       :httpMethod "POST"^^xsd:string ;
-       :url "http://10.1.13.14/offof" ;
-       :name "SwitchTvOff"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseNoise
-:DecreaseNoise rdf:type owl:NamedIndividual ,
-                        :DecreaseEffect ;
-               :affects :AmbientNoise .
-
+###  http://www.tu-chemnitz.de/vsr/ontology#AmbientLuminosity
+:AmbientLuminosity rdf:type owl:NamedIndividual ,
+                            :Parameter ;
+                   :name "AmbientLuminosity"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#AmbientNoise
 :AmbientNoise rdf:type owl:NamedIndividual ,
-                :Parameter ;
-          :name "AmbientNoise"^^xsd:string .
-
-          
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnTvOff
-:TurnTvOff rdf:type owl:NamedIndividual ,
-                      :FixedValueEffect ;
-             :affects :TvPowerState ;
-             :value "off".
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvPowerState
-:TvPowerState rdf:type owl:NamedIndividual ,
-                           :Parameter ;
-                           :name "TvPowerState"^^xsd:string .
-                           
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOffPC
-:TvOffPC rdf:type owl:NamedIndividual ,
-                 :PreCondition ;
-        :on :TvPowerState ;
-        :value "on". 
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOnTransition
-:TvOnTransition rdf:type owl:NamedIndividual ,
-                         :Transition ;
-                :hasActuation :TvOn ;
-                :hasEffect :IncreaseNoise ,
-                           :TurnTvOn ;
-                :hasPreCondition :TvOnPC .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOn
-:TvOn rdf:type owl:NamedIndividual ,
-               :HttpRequest ;
-      :httpMethod "POST"^^xsd:string ;
-      :url "http://10.1.13.14/TV/very/long/path/{path-param}/needed/on?queryParam1={myQueryStuff}" ;
-      :name "SwitchTVOn"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseNoise
-:IncreaseNoise rdf:type owl:NamedIndividual ,
-                        :IncreaseEffect ;
-               :affects :AmbientNoise .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnTvOn
-:TurnTvOn rdf:type owl:NamedIndividual ,
-                     :FixedValueEffect ;
-             :affects :TvPowerState ;
-             :value "on"^^rdfs:Literal .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOnPC
-:TvOnPC rdf:type owl:NamedIndividual ,
-                  :PreCondition ;
-         :on :TvPowerState ;
-         :value "off"^^rdfs:Literal  .
-
-
-
-#################################################################################
-#    Instances for a phllips hue lamp with two actuators: turn off and turn on 
-#################################################################################
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#PhilipsHue
-:PhilipsHue rdf:type owl:NamedIndividual ,
-                     :CompositeDevice ;
-            :hasActuator :lampActuator ;
-            :hasSensor :Sensor1;
-            :name "philipshue"^^xsd:string ;
-            :type "lamp"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#lampActuator
-:lampActuator rdf:type owl:NamedIndividual ,
-                    :Actuator ;
-           :hasTransition :LampOffTransition ,
-                          :LampOnTransition ;
-           :name "philipshue"^^xsd:string .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOffTransition
-:LampOffTransition rdf:type owl:NamedIndividual ,
-                        :Transition ;
-               :hasActuation :LampOff ;
-               :hasEffect :DecreaseBrightness ,
-                          :TurnLightOff ;
-               :hasPreCondition :LampOffPrecondition ;
-               :name "off"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOff
-:LampOff rdf:type owl:NamedIndividual ,
-                  :HttpRequest ;
-         :httpMethod "POST"^^xsd:string ;
-         :name "SwitchOffLamp"^^xsd:string ;
-         :url "http://10.0.1.113/lights/ToggleAndLower"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseBrightness
-:DecreaseBrightness rdf:type owl:NamedIndividual ,
-                             :DecreaseEffect ;
-                    :affects :AmbientLuminosity.
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#AmbientLuminosity
-:AmbientLuminosity rdf:type owl:NamedIndividual ,
-                   :Parameter ;
-          :name "AmbientLuminosity"^^xsd:string .
-        
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnLightOff
-:TurnLightOff rdf:type owl:NamedIndividual ,
-                         :FixedValueEffect ;
-                :affects :LampPowerState ;
-                :value "off"^^rdfs:Literal .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampPowerState
-:LampPowerState rdf:type owl:NamedIndividual ,
-                   :Parameter ;
-          :name "LampPowerState"^^xsd:string .
-          
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOffPrecondition
-:LampOffPrecondition rdf:type owl:NamedIndividual ,
-                              :PreCondition ;
-          :on :LampPowerState ;
-          :value "on"^^rdfs:Literal .
-
-        
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOnTransition
-:LampOnTransition rdf:type owl:NamedIndividual ,
-                       :Transition ;
-              :hasActuation :LampOn ;
-              :hasEffect :IncreaseBrightness ,
-                         :TurnLightOn ;
-              :hasPreCondition :LampOnPrecondition ;
-              :name "on"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOn
-:LampOn rdf:type owl:NamedIndividual ,
-                 :HttpRequest ;
-        :httpMethod "POST"^^xsd:string ;
-        :name "SwitchOnLamp"^^xsd:string ;
-        :url "http://10.0.1.113/lights/ToggleAndHigher"^^xsd:string .
-
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseBrightness
-:IncreaseBrightness rdf:type owl:NamedIndividual ,
-                             :IncreaseEffect ;
-                    :affects :AmbientLuminosity ;
-                    :increment ""^^xsd:string .
-
-            
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnLightOn
-:TurnLightOn rdf:type owl:NamedIndividual ,
-                        :FixedValueEffect ;
-               :affects :LampPowerState ;
-               :value "on"^^rdfs:Literal .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOnPrecondition
-:LampOnPrecondition rdf:type owl:NamedIndividual ,
-                             :PreCondition ;
-                    :on :LampPowerState ;
-                    :value "off"^^rdfs:Literal .
-
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#Sensor1
-:Sensor1 rdf:type owl:NamedIndividual ,
-                  :Sensor ;
-         :hasMeasurement :Measurement1 .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#Measurement1
-:Measurement1 rdf:type owl:NamedIndividual ,
-                       :HttpRequest ,
-                       :Measurement ;
-              :measures :Parameter1 ;
-              :httpMethod "GET"^^xsd:string ;
-              :name "GetLights"^^xsd:string ;
-              :url "http://10.0.1.113/lights"^^xsd:string .
-
-
-################################################################################################
-# Instances for a shades from an unknown brand with two actuators: turn off and turn on
-################################################################################################
-
-###  http://www.tu-chemnitz.de/vsr/ontology#Shades
-:Shades rdf:type owl:NamedIndividual ,
-                 :CompositeDevice ;
-        :hasActuator :shadesOpenCloseActuator ;
-        :name "philipsshades"^^xsd:string ;
-        :type "shades"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#shadesOpenCloseActuator
-:shadesOpenCloseActuator rdf:type owl:NamedIndividual ,
-                         :Actuator ;
-                :hasTransition :CloseTransition ,
-                               :OpenTransition ;
-                :name "shades"^^xsd:string .
-
+                       :Parameter ;
+              :name "AmbientNoise"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#CloseTransition
@@ -532,36 +273,190 @@
                  :name "close"^^xsd:string .
 
 
-
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClose
-:ShadesClose rdf:type owl:NamedIndividual ,
-                      :HttpRequest ;
-             :httpMethod "POST"^^xsd:string ;
-             :name "ShadesClose"^^xsd:string ;
-             :url "http://10.0.1.113/shades/ToggleAndLower"^^xsd:string .
+###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseBrightness
+:DecreaseBrightness rdf:type owl:NamedIndividual ,
+                             :DecreaseEffect ;
+                    :affects :AmbientLuminosity .
 
 
-
-###  http://www.tu-chemnitz.de/vsr/ontology#ToggleShadesClose
-:ToggleShadesClose rdf:type owl:NamedIndividual ,
-                            :ToggleEffect ;
-                   :affects :ShadesPowerState .
-
+###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseNoise
+:DecreaseNoise rdf:type owl:NamedIndividual ,
+                        :DecreaseEffect ;
+               :affects :AmbientNoise .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesPowerState
-:ShadesPowerState rdf:type owl:NamedIndividual ,
-                     :Parameter ;
-            :name "ShadePowerState"^^xsd:string . 
+###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseTemperature
+:DecreaseTemperature rdf:type owl:NamedIndividual ,
+                              :DecreaseEffect ;
+                     :affects :Temperature .
 
 
+###  http://www.tu-chemnitz.de/vsr/ontology#Heating
+:Heating rdf:type owl:NamedIndividual ,
+                  :Actuator ;
+         :hasTransition :HeatingOffTransition ,
+                        :HeatingOnTransition ;
+         :name "relay heating"^^xsd:string .
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClosePC
-:ShadesClosePC rdf:type owl:NamedIndividual ,
-                        :PreCondition ;
-               :on :ShadesPowerState ;
-               :value "open"^^rdfs:Literal.
 
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOff
+:HeatingOff rdf:type owl:NamedIndividual ,
+                     :HttpRequest ;
+            :httpMethod "POST"^^xsd:string ;
+            :name "heating_off"^^xsd:string ;
+            :url "http://10.0.1.113/heating/off"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOffEffect
+:HeatingOffEffect rdf:type owl:NamedIndividual ,
+                           :FixedValueEffect ;
+                  :affects :HeatingPowerState ;
+                  :value "off"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOffPrecondition
+:HeatingOffPrecondition rdf:type owl:NamedIndividual ,
+                                 :PreCondition ;
+                        :on :HeatingPowerState ;
+                        :value "on"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOffTransition
+:HeatingOffTransition rdf:type owl:NamedIndividual ,
+                               :Transition ;
+                      :hasActuation :HeatingOff ;
+                      :hasEffect :DecreaseTemperature ,
+                                 :HeatingOffEffect ;
+                      :hasPreCondition :HeatingOffPrecondition .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOn
+:HeatingOn rdf:type owl:NamedIndividual ,
+                    :HttpRequest ;
+           :httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        power:
+          type: number
+      required:
+        - power"""^^xsd:string ;
+           :httpMethod "POST"^^xsd:string ;
+           :name "heating_on"^^xsd:string ;
+           :url "http://10.0.1.113/heating/on"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOnEffect
+:HeatingOnEffect rdf:type owl:NamedIndividual ,
+                          :FixedValueEffect ;
+                 :affects :HeatingPowerState ;
+                 :value "on"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOnPrecondition
+:HeatingOnPrecondition rdf:type owl:NamedIndividual ,
+                                :PreCondition ;
+                       :on :HeatingPowerState ;
+                       :value "off"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOnTransition
+:HeatingOnTransition rdf:type owl:NamedIndividual ,
+                              :Transition ;
+                     :hasActuation :HeatingOn ;
+                     :hasEffect :HeatingOnEffect ,
+                                :IncreaseTemperature ;
+                     :hasPreCondition :HeatingOnPrecondition .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#HeatingPowerState
+:HeatingPowerState rdf:type owl:NamedIndividual ,
+                            :Parameter .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseBrightness
+:IncreaseBrightness rdf:type owl:NamedIndividual ,
+                             :IncreaseEffect ;
+                    :affects :AmbientLuminosity ;
+                    :increment ""^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseNoise
+:IncreaseNoise rdf:type owl:NamedIndividual ,
+                        :IncreaseEffect ;
+               :affects :AmbientNoise .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseTemperature
+:IncreaseTemperature rdf:type owl:NamedIndividual ,
+                              :IncreaseEffect ;
+                     :affects :Temperature .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampOff
+:LampOff rdf:type owl:NamedIndividual ,
+                  :HttpRequest ;
+         :httpMethod "POST"^^xsd:string ;
+         :name "SwitchOffLamp"^^xsd:string ;
+         :url "http://10.0.1.113/lights/ToggleAndLower"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampOffPrecondition
+:LampOffPrecondition rdf:type owl:NamedIndividual ,
+                              :PreCondition ;
+                     :on :LampPowerState ;
+                     :value "on"^^rdfs:Literal .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampOffTransition
+:LampOffTransition rdf:type owl:NamedIndividual ,
+                            :Transition ;
+                   :hasActuation :LampOff ;
+                   :hasEffect :DecreaseBrightness ,
+                              :TurnLightOff ;
+                   :hasPreCondition :LampOffPrecondition .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampOn
+:LampOn rdf:type owl:NamedIndividual ,
+                 :HttpRequest ;
+        :httpMethod "POST"^^xsd:string ;
+        :name "SwitchOnLamp"^^xsd:string ;
+        :url "http://10.0.1.113/lights/ToggleAndHigher"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampOnPrecondition
+:LampOnPrecondition rdf:type owl:NamedIndividual ,
+                             :PreCondition ;
+                    :on :LampPowerState ;
+                    :value "off"^^rdfs:Literal .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampOnTransition
+:LampOnTransition rdf:type owl:NamedIndividual ,
+                           :Transition ;
+                  :hasActuation :LampOn ;
+                  :hasEffect :IncreaseBrightness ,
+                             :TurnLightOn ;
+                  :hasPreCondition :LampOnPrecondition .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#LampPowerState
+:LampPowerState rdf:type owl:NamedIndividual ,
+                         :Parameter ;
+                :name "LampPowerState"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#Measurement1
+:Measurement1 rdf:type owl:NamedIndividual ,
+                       :HttpRequest ,
+                       :Measurement ;
+              :measures :Parameter1 ;
+              :httpMethod "GET"^^xsd:string ;
+              :name "GetLights"^^xsd:string ;
+              :url "http://10.0.1.113/lights"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#OpenTransition
@@ -574,6 +469,47 @@
                 :name "open"^^xsd:string .
 
 
+###  http://www.tu-chemnitz.de/vsr/ontology#Parameter1
+:Parameter1 rdf:type owl:NamedIndividual .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#PhilipsHue
+:PhilipsHue rdf:type owl:NamedIndividual ,
+                     :CompositeDevice ;
+            :hasActuator :lampActuator ;
+            :hasSensor :Sensor1 ;
+            :name "philipshue"^^xsd:string ;
+            :type "lamp"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#Sensor1
+:Sensor1 rdf:type owl:NamedIndividual ,
+                  :Sensor ;
+         :hasMeasurement :Measurement1 .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#Shades
+:Shades rdf:type owl:NamedIndividual ,
+                 :CompositeDevice ;
+        :hasActuator :shadesOpenCloseActuator ;
+        :name "philipsshades"^^xsd:string ;
+        :type "shades"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClose
+:ShadesClose rdf:type owl:NamedIndividual ,
+                      :HttpRequest ;
+             :httpMethod "POST"^^xsd:string ;
+             :name "ShadesClose"^^xsd:string ;
+             :url "http://10.0.1.113/shades/ToggleAndLower"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClosePC
+:ShadesClosePC rdf:type owl:NamedIndividual ,
+                        :PreCondition ;
+               :on :ShadesPowerState ;
+               :value "open"^^rdfs:Literal .
+
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#ShadesOpen
 :ShadesOpen rdf:type owl:NamedIndividual ,
@@ -583,20 +519,148 @@
             :url "http://10.0.1.113/shades/ToggleAndHigher"^^xsd:string .
 
 
+###  http://www.tu-chemnitz.de/vsr/ontology#ShadesOpenPC
+:ShadesOpenPC rdf:type owl:NamedIndividual ,
+                       :PreCondition ;
+              :on :ShadesPowerState ;
+              :value "close"^^rdfs:Literal .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ShadesPowerState
+:ShadesPowerState rdf:type owl:NamedIndividual ,
+                           :Parameter ;
+                  :name "ShadePowerState"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TV
+:TV rdf:type owl:NamedIndividual ,
+             :CompositeDevice ;
+    :hasActuator :TvActuator ;
+    :name "samsungtv"^^xsd:string ;
+    :type "tv"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#Temperature
+:Temperature rdf:type owl:NamedIndividual ,
+                      :Parameter .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ToggleShadesClose
+:ToggleShadesClose rdf:type owl:NamedIndividual ,
+                            :ToggleEffect ;
+                   :affects :ShadesPowerState .
+
+
 ###  http://www.tu-chemnitz.de/vsr/ontology#ToggleShadesOpen
 :ToggleShadesOpen rdf:type owl:NamedIndividual ,
                            :ToggleEffect ;
                   :affects :ShadesPowerState .
 
 
+###  http://www.tu-chemnitz.de/vsr/ontology#TurnLightOff
+:TurnLightOff rdf:type owl:NamedIndividual ,
+                       :FixedValueEffect ;
+              :affects :LampPowerState ;
+              :value "off"^^rdfs:Literal .
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesOpenPC
-:ShadesOpenPC rdf:type owl:NamedIndividual ,
-                       :PreCondition ;
-              :on :ShadesPowerState ;
-              :value "close"^^rdfs:Literal.
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TurnLightOn
+:TurnLightOn rdf:type owl:NamedIndividual ,
+                      :FixedValueEffect ;
+             :affects :LampPowerState ;
+             :value "on"^^rdfs:Literal .
 
 
+###  http://www.tu-chemnitz.de/vsr/ontology#TurnTvOff
+:TurnTvOff rdf:type owl:NamedIndividual ,
+                    :FixedValueEffect ;
+           :affects :TvPowerState ;
+           :value "off" .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TurnTvOn
+:TurnTvOn rdf:type owl:NamedIndividual ,
+                   :FixedValueEffect ;
+          :affects :TvPowerState ;
+          :value "on"^^rdfs:Literal .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvActuator
+:TvActuator rdf:type owl:NamedIndividual ,
+                     :Actuator ;
+            :hasTransition :TvOffTransition ,
+                           :TvOnTransition ;
+            :name "samsungTV"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvOff
+:TvOff rdf:type owl:NamedIndividual ,
+                :HttpRequest ;
+       :httpMethod "POST"^^xsd:string ;
+       :name "SwitchTvOff"^^xsd:string ;
+       :url "http://10.1.13.14/offof" .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvOffPC
+:TvOffPC rdf:type owl:NamedIndividual ,
+                  :PreCondition ;
+         :on :TvPowerState ;
+         :value "on" .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvOffTransition
+:TvOffTransition rdf:type owl:NamedIndividual ,
+                          :Transition ;
+                 :hasActuation :TvOff ;
+                 :hasEffect :DecreaseNoise ,
+                            :TurnTvOff ;
+                 :hasPreCondition :TvOffPC .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvOn
+:TvOn rdf:type owl:NamedIndividual ,
+               :HttpRequest ;
+      :httpMethod "POST"^^xsd:string ;
+      :name "SwitchTVOn"^^xsd:string ;
+      :url "http://10.1.13.14/TV/very/long/path/{path-param}/needed/on?queryParam1={myQueryStuff}" .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvOnPC
+:TvOnPC rdf:type owl:NamedIndividual ,
+                 :PreCondition ;
+        :on :TvPowerState ;
+        :value "off"^^rdfs:Literal .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvOnTransition
+:TvOnTransition rdf:type owl:NamedIndividual ,
+                         :Transition ;
+                :hasActuation :TvOn ;
+                :hasEffect :IncreaseNoise ,
+                           :TurnTvOn ;
+                :hasPreCondition :TvOnPC .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#TvPowerState
+:TvPowerState rdf:type owl:NamedIndividual ,
+                       :Parameter ;
+              :name "TvPowerState"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#lampActuator
+:lampActuator rdf:type owl:NamedIndividual ,
+                       :Actuator ;
+              :hasTransition :LampOffTransition ,
+                             :LampOnTransition ;
+              :name "philipshue"^^xsd:string .
+
+
+###  http://www.tu-chemnitz.de/vsr/ontology#shadesOpenCloseActuator
+:shadesOpenCloseActuator rdf:type owl:NamedIndividual ,
+                                  :Actuator ;
+                         :hasTransition :CloseTransition ,
+                                        :OpenTransition ;
+                         :name "shades"^^xsd:string .
 
 
 ###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi

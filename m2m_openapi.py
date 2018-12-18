@@ -13,7 +13,7 @@ VSR = Namespace('http://www.tu-chemnitz.de/vsr/ontology#')
 instance = rdflib.Graph()
 instance.parse(IN, format='n3')
 
-find_http_requests = """SELECT ?d ?device ?http_request ?name ?method ?url
+find_http_requests = """SELECT ?d ?device ?http_request ?name ?method ?url ?body
        WHERE {
             ?d a ?device_subclass.
             ?device_subclass a owl:Class.
@@ -23,6 +23,7 @@ find_http_requests = """SELECT ?d ?device ?http_request ?name ?method ?url
             OPTIONAL{?http_request vsr:name ?name}
             ?http_request vsr:httpMethod ?method .
             ?http_request vsr:url ?url . 
+            OPTIONAL{?http_request vsr:httpBody ?body}
             {
                 ?d vsr:hasTransition ?t.
                 ?t vsr:hasActuation ?http_request.
@@ -45,11 +46,11 @@ paths = defaultdict(dict)
 http_requests = instance.query(find_http_requests, initNs={'vsr': VSR, 'rdfs': RDFS, 'owl': OWL})
 resources = defaultdict(list)
 
-for device, devicename, http_request, name, method, url in http_requests:
-    print('%s %s %s %s %s' % (device, http_request, name, method, url))
+for device, devicename, http_request, name, method, url, body in http_requests:
+    print('%s %s %s %s %s %s' % (device, http_request, name, method, url, body))
     url = urlparse(url)
     resources[url.path].append(
-        {'method': method.lower(), 'device': devicename, 'name': name, 'query_params': url.query})
+        {'method': method.lower(), 'device': devicename, 'name': name, 'query_params': url.query, 'body': body})
 
 for resource in resources:
     path_params = [p for p in resource.split('/')[1:] if p[0] == '{' and p[-1] == '}']
@@ -76,6 +77,9 @@ for resource in resources:
 
         if add_parameters:
             entry['parameters'] = parameters
+
+        if request['body'] != None:
+            entry['requestBody'] = yaml.load(str(request['body']))
 
         if request['method'] == 'get':
             responses['200'] = {'description': 'OK'}
