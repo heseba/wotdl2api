@@ -12,6 +12,8 @@ def invoke_implementation(function_name, kwargs, request, device):
 
     if found:
         implementation = importlib.import_module(import_path)
+        if not hasattr(implementation, function_name):
+            return 'Implementation required for %s of device %s' % (function_name, device)
         method = getattr(implementation, function_name)
         if len(kwargs) > 0:
 
@@ -19,4 +21,4 @@ def invoke_implementation(function_name, kwargs, request, device):
         else:
             return method()
     else:
-        return 'Implementation Required for %s of device %s' % (function_name, device)
+        return 'Implementation required for device %s' % device
