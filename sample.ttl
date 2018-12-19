@@ -303,7 +303,7 @@
 :HeatingOff rdf:type owl:NamedIndividual ,
                      :HttpRequest ;
             :httpMethod "POST"^^xsd:string ;
-            :name "heating_off"^^xsd:string ;
+            :name "SwitchOffHeating"^^xsd:string ;
             :url "http://10.0.1.113/heating/off"^^xsd:string .
 
 
@@ -344,7 +344,7 @@ content:
       required:
         - power"""^^xsd:string ;
            :httpMethod "POST"^^xsd:string ;
-           :name "heating_on"^^xsd:string ;
+           :name "SwitchOnHeating"^^xsd:string ;
            :url "http://10.0.1.113/heating/on"^^xsd:string .
 
 
@@ -400,7 +400,7 @@ content:
                   :HttpRequest ;
          :httpMethod "POST"^^xsd:string ;
          :name "SwitchOffLamp"^^xsd:string ;
-         :url "http://10.0.1.113/lights/ToggleAndLower"^^xsd:string .
+         :url "http://10.0.1.113/lights/turnOff"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#LampOffPrecondition
@@ -424,7 +424,7 @@ content:
                  :HttpRequest ;
         :httpMethod "POST"^^xsd:string ;
         :name "SwitchOnLamp"^^xsd:string ;
-        :url "http://10.0.1.113/lights/ToggleAndHigher"^^xsd:string .
+        :url "http://10.0.1.113/lights/turnOn"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#LampOnPrecondition
@@ -502,7 +502,7 @@ content:
                       :HttpRequest ;
              :httpMethod "POST"^^xsd:string ;
              :name "ShadesClose"^^xsd:string ;
-             :url "http://10.0.1.113/shades/ToggleAndLower"^^xsd:string .
+             :url "http://10.0.1.113/shades/close"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClosePC
@@ -517,7 +517,7 @@ content:
                      :HttpRequest ;
             :httpMethod "POST"^^xsd:string ;
             :name "ShadesOpen"^^xsd:string ;
-            :url "http://10.0.1.113/shades/ToggleAndHigher"^^xsd:string .
+            :url "http://10.0.1.113/shades/open"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#ShadesOpenPC
@@ -653,7 +653,7 @@ content:
                        :Actuator ;
               :hasTransition :LampOffTransition ,
                              :LampOnTransition ;
-              :name "philipshue"^^xsd:string .
+              :name "philips hue"^^xsd:string .
 
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#shadesOpenCloseActuator
