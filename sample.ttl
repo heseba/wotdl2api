@@ -290,6 +290,40 @@
                               :DecreaseEffect ;
                      :affects :Temperature .
 
+###  http://www.tu-chemnitz.de/vsr/ontology#Thermostat
+:Thermostat rdf:type owl:NamedIndividual ,
+                  :Actuator ;
+         :hasTransition :ThermostatTransition;
+         :name "thermostat"^^xsd:string .
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ThermostatTransition
+:ThermostatTransition rdf:type owl:NamedIndividual ,
+                               :Transition ;
+                      :hasActuation :ThermostatSet ;
+                      :hasEffect :ThermostatEffect, :HeatingOnEffect.
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ThermostatEffect
+:ThermostatEffect rdf:type owl:NamedIndividual ,
+                          :FixedValueEffect ;
+                 :affects :Temperature.
+
+###  http://www.tu-chemnitz.de/vsr/ontology#ThermostatSet
+:ThermostatSet rdf:type owl:NamedIndividual ,
+                    :HttpRequest ;
+           :httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        targetTemperature:
+          type: number
+      required:
+        - targetTemperature"""^^xsd:string ;
+           :httpMethod "PUT"^^xsd:string ;
+           :name "thermostat_set"^^xsd:string ;
+           :url "http://10.0.1.113/thermostat"^^xsd:string .
+
 
 ###  http://www.tu-chemnitz.de/vsr/ontology#Heating
 :Heating rdf:type owl:NamedIndividual ,
