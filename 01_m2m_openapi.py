@@ -108,7 +108,7 @@ api_name = 'wot_api'
 with open('config.json', 'w') as configfile:
     json.dump({'packageName': api_name, 'defaultController': api_name + '_controller', 'serverPort': port}, fp=configfile)
 
-with fileinput.FileInput('m2t_openapi_flask.sh', inplace=True, backup='.bak') as m2tfile:
+with fileinput.FileInput('02_m2t_openapi_flask.sh', inplace=True) as m2tfile:
     for line in m2tfile:
         if line[:5] == 'PORT=':
             print('PORT=' + str(port))
