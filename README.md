@@ -1,7 +1,7 @@
-# WoT Ontology to REST
+# WoTDL Ontology to REST
 
 ## Overview
-This toolchain allows to generate REST APIs from instances of the [WoT OWL Ontology](TODO), which is part of the GrOWTH approach for Goal-Oriented End User Development for Web of Things Devices. [1]
+This toolchain allows to generate REST APIs from instances of the [WoTDL OWL Ontology](TODO), which is part of the GrOWTH approach for Goal-Oriented End User Development for Web of Things Devices. [1]
 
 It uses a model-to-model transformation to generate an [OpenAPI](https://openapis.org) specification. 
 The Flask-based REST API is generated using [OpenAPI Generator](https://openapi-generator.tech).
