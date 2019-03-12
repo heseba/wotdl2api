@@ -544,7 +544,6 @@ content:
 
 <#LampOff>
     a wotdl:HttpRequest ;
-    wotdl:httpBody """required: true
     wotdl:httpMethod "PUT"^^xsd:string ;
     wotdl:name "switch_off_lamp"^^xsd:string ;
     wotdl:url "http://10.0.1.122/lights/off"^^xsd:string .
