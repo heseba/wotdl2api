@@ -24,15 +24,18 @@ def deactivate_heating():
 
 
 
-def thermostat_set(target_temperature):
+def thermostat_set(temp):
     current_temp = get_temperature()
 
-    if current_temp > target_temperature:
+    if current_temp > temp:
         return Response('current temperature above target temperature', status=500)
 
     while True:
-        up_threshold = target_temperature + HYSTERESIS * target_temperature
-        down_threshold = target_temperature - HYSTERESIS * target_temperature
+        current_temp = get_temperature()
+        print('Control Cycle current temperature %s' % current_temp)
+
+        up_threshold = temp + HYSTERESIS * temp
+        down_threshold = temp - HYSTERESIS * temp
 
         if current_temp < down_threshold:
             activate_heating()
@@ -43,4 +46,4 @@ def thermostat_set(target_temperature):
 
         time.sleep(CONTROL_INTERVAL)
 
-    return Response('thermostat set to target temperature ' + target_temperature, status=200)
+    return Response('thermostat set to target temperature ' + temp, status=200)
