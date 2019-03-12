@@ -1,0 +1,761 @@
+@prefix wotdl: <http://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ssn: <http://www.w3.org/ns/sosa#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owls: <http://www.daml.org/services/owl-s/1.2/Profile.owl#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@base <http://vsr.informatik.tu-chemnitz.de/projects/growth/samples/icwe2019> .
+
+
+<https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl> rdf:type owl:Ontology ;
+                                                                    rdfs:comment "The WoTDL ontology describes the key concepts of Artificial Intelligence Planning-based End User Development applications for the WoT."^^xsd:string ;
+                                                                    owl:versionInfo "1.0" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#affects
+wotdl:affects rdf:type owl:ObjectProperty ;
+         rdfs:domain wotdl:Effect ;
+         rdfs:range wotdl:Parameter ;
+         rdfs:comment "The link between an Effect and a Parameter which describes the affects it has on a physical parameter leading to a state change in the environment" ;
+         rdfs:label "affects" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasActuation
+wotdl:hasActuation rdf:type owl:ObjectProperty ;
+              rdfs:domain wotdl:Transition ;
+              rdfs:range wotdl:Actuation ;
+              rdfs:comment "Relation linking a Transition to the Actuation. " ;
+              rdfs:label "has actuation" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasActuator
+wotdl:hasActuator rdf:type owl:ObjectProperty ;
+             rdfs:domain wotdl:CompositeDevice ;
+             rdfs:range wotdl:Actuator ;
+             rdfs:comment "Relation linking a CompositeDevice to the Actuator." ;
+             rdfs:label "has actuator" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasEffect
+wotdl:hasEffect rdf:type owl:ObjectProperty ;
+           rdfs:domain wotdl:Transition ;
+           rdfs:range wotdl:Effect ;
+           rdfs:comment "Relation between a Transition and an Effect that describes each transition has an effect on the environment." ;
+           rdfs:label "has effect" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasMeasurement
+wotdl:hasMeasurement rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain wotdl:Sensor ;
+                rdfs:range wotdl:Measurement ;
+                rdfs:comment "Relation between a Sensor and a Measurement that it is capable of sensing." ;
+                rdfs:label "has measurement" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasParameter
+wotdl:hasParameter rdf:type owl:ObjectProperty ;
+              rdfs:domain wotdl:State ;
+              rdfs:range wotdl:Parameter ;
+              rdfs:comment "Describes the relation between a state and a parameter to expresses that each state of the system is described using a set of parameter and values." ;
+              rdfs:label "has parameter" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasPreCondition
+wotdl:hasPreCondition rdf:type owl:ObjectProperty ;
+                 rdfs:domain wotdl:Transition ;
+                 rdfs:range wotdl:PreCondition ;
+                 rdfs:comment "Relation from a Transition to a Precondition describing the  transition to next state  under certain Conditions. Used for example to say that in order to turn a lamp off certain conditions apply." ;
+                 rdfs:label "has precondition" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasSensor
+wotdl:hasSensor rdf:type owl:ObjectProperty ;
+           rdfs:domain wotdl:CompositeDevice ;
+           rdfs:range wotdl:Sensor ;
+           rdfs:comment "Relation linking a CompositeDevice to the Sensor." ;
+           rdfs:label "has sensor" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasTransition
+wotdl:hasTransition rdf:type owl:ObjectProperty ;
+               rdfs:domain wotdl:Actuator ;
+               rdfs:range wotdl:Transition ;
+               rdfs:comment "Relation from an Actuator to a Transition between the different states of the environment." ;
+               rdfs:label "has transition" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#measures
+wotdl:measures rdf:type owl:ObjectProperty ;
+          rdfs:domain wotdl:Measurement ;
+          rdfs:range wotdl:Parameter ;
+          rdfs:comment "Relation linking a Measurement made by a Sensor to the parameter that was measured. For instance a temperature sensor measures the current temperature." ;
+          rdfs:label "measures" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#on
+wotdl:on rdf:type owl:ObjectProperty ;
+    rdfs:domain wotdl:PreCondition ;
+    rdfs:range wotdl:Parameter ;
+    rdfs:comment "Relation from a Transition to an Effect describing the  effects that a certain transition has on the environmental state." ;
+    rdfs:label "on" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  #operator
+<#operator> rdf:type owl:DatatypeProperty ;
+            rdfs:domain wotdl:PreCondition ;
+            rdfs:range rdfs:Literal .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#decrement
+wotdl:decrement rdf:type owl:DatatypeProperty ;
+           rdfs:domain wotdl:DecreaseEffect ;
+           rdfs:range xsd:decimal ,
+                      xsd:double ,
+                      xsd:float ;
+           rdfs:comment "The amount of decrease an effect has on an environmental parameter" ;
+           rdfs:label "Decrement" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#httpBody
+wotdl:httpBody rdf:type owl:DatatypeProperty ;
+          rdfs:comment "OpenAPI 3.0 compliant body specification" ;
+          rdfs:label "HTTP body" ;
+          rdfs:seeAlso "https://swagger.io/docs/specification/describing-request-body/" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#httpMethod
+wotdl:httpMethod rdf:type owl:DatatypeProperty ;
+            rdfs:domain wotdl:HttpRequest ;
+            rdfs:range xsd:string ;
+            rdfs:comment "HTTP defines a set of request methods to indicate the desired action to be performed for a given resource i.e. get, post, put, delete" ;
+            rdfs:label "HTTP Method" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#increment
+wotdl:increment rdf:type owl:DatatypeProperty ;
+           rdfs:domain wotdl:IncreaseEffect ;
+           rdfs:range xsd:decimal ,
+                      xsd:double ,
+                      xsd:float ;
+           rdfs:comment "The amount of increase an effect has on an environmental parameter" ;
+           rdfs:label "Increment" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#name
+wotdl:name rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain wotdl:Actuation ,
+                  wotdl:CompositeDevice ,
+                  wotdl:Device ,
+                  wotdl:Parameter ;
+      rdfs:comment "Describes the name of a physical device, parameter, or actuation" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#status
+wotdl:status rdf:type owl:DatatypeProperty ;
+        rdfs:domain wotdl:Effect ,
+                    wotdl:PreCondition ;
+        rdfs:range xsd:string .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#timeToEffect
+wotdl:timeToEffect rdf:type owl:DatatypeProperty ;
+              rdfs:domain wotdl:Effect ;
+              rdfs:range xsd:positiveInteger ;
+              rdfs:comment "The duration it takes for the desired effect to take place" ;
+              rdfs:label "Time To Effect" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#type
+wotdl:type rdf:type owl:DatatypeProperty ;
+      rdfs:domain wotdl:CompositeDevice ,
+                  wotdl:Parameter ;
+      rdfs:range xsd:string ;
+      rdfs:comment "It describes the valid data type of a parameter, for instance a type for the temperature could be float or for a shades OpenClose." ;
+      rdfs:label "type" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#url
+wotdl:url rdf:type owl:DatatypeProperty ;
+     rdfs:domain wotdl:HttpRequest ;
+     rdfs:range xsd:string ;
+     rdfs:comment "It is a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it." ;
+     rdfs:label "URL" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#value
+wotdl:value rdf:type owl:DatatypeProperty ;
+       rdfs:domain wotdl:FixedValueEffect ,
+                   wotdl:PreCondition ,
+                   wotdl:State ;
+       rdfs:range rdfs:Literal ;
+       rdfs:comment "It describes the value of a fixed effect type i.e., lamp=on or the value of a precondition lamp=off, or the value of a state. " ;
+       rdfs:label "value" .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#waitAfterActuation
+wotdl:waitAfterActuation rdf:type owl:DatatypeProperty ;
+                    rdfs:domain wotdl:Actuation ;
+                    rdfs:range xsd:positiveInteger ;
+                    rdfs:comment "The duration it takes before the actuation can take place for example in some cases the device needs to first startup before the actuation can be triggered." ;
+                    rdfs:label "Wait After Actuation" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.w3.org/ns/sosa/Actuation
+sosa:Actuation rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/ssn/Sensor
+ssn:Sensor rdf:type owl:Class .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Actuation
+wotdl:Actuation rdf:type owl:Class ;
+           rdfs:subClassOf sosa:Actuation ;
+           rdfs:comment "An Actuation carries out an (Actuation) Transition to change the state of the world using an Actuator. " ;
+           rdfs:label "actuation"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Actuator
+wotdl:Actuator rdf:type owl:Class ;
+          rdfs:subClassOf wotdl:Device ;
+          rdfs:comment "A device that is used by, or implements, an (Actuation) Procedure that changes the state of the world. " ;
+          rdfs:label "actuator"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#CompositeDevice
+wotdl:CompositeDevice rdf:type owl:Class ;
+                 rdfs:comment "specifies that a hardware device can have multiple components where each component can be controlled independently. A  CompositeDevice  can have a series of Actuator and Sensor. For example, a Raspberry Pi equipped with a SenseHat is a  CompositeDevice with a set of sensors and actuators i.e., LED board that are connected to it. " ;
+                 rdfs:label "composite device"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#DecreaseEffect
+wotdl:DecreaseEffect rdf:type owl:Class ;
+                rdfs:subClassOf wotdl:Effect ;
+                rdfs:comment "It is used for decreasing a parameter" ;
+                rdfs:label "decrease effect"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Device
+wotdl:Device rdf:type owl:Class ;
+        rdfs:comment "A device that is used by, or implements, an (Actuation) Procedure that changes the state of the world" ;
+        rdfs:label "device"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Effect
+wotdl:Effect rdf:type owl:Class ;
+        rdfs:comment "The transformation of Actuations performed by Actuators and the affects it has on a physical parameter leading to a state change in the environment" ;
+        rdfs:label "effect"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#FixedValueEffect
+wotdl:FixedValueEffect rdf:type owl:Class ;
+                  rdfs:subClassOf wotdl:Effect ;
+                  rdfs:comment "It is used for assigning constant values to a parameter" ;
+                  rdfs:label "fixed value effect"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#GoalState
+wotdl:GoalState rdf:type owl:Class ;
+           rdfs:subClassOf wotdl:State ;
+           rdfs:comment "It refers to the desired state of the environment" ;
+           rdfs:label "goal state"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HttpRequest
+wotdl:HttpRequest rdf:type owl:Class ;
+             rdfs:subClassOf wotdl:Actuation ,
+                             wotdl:Measurement ;
+             rdfs:comment "Provides all the required information to execute an HTTP request to perform either Actuation or Measurement. The HTTPRequest includes HTTPMethod (GET, POST, PUT), HTTPheader, URL, and the body." ;
+             rdfs:label "HTTP request"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#IncreaseEffect
+wotdl:IncreaseEffect rdf:type owl:Class ;
+                rdfs:subClassOf wotdl:Effect ;
+                rdfs:comment "for increasing a parameter" ;
+                rdfs:label "increase effect"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#InitialState
+wotdl:InitialState rdf:type owl:Class ;
+              rdfs:subClassOf wotdl:State ;
+              rdfs:comment "It refers to the state at the start of planning." ;
+              rdfs:label "initial state"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Measurement
+wotdl:Measurement rdf:type owl:Class ;
+             rdfs:comment "It is triggered on a Sensor device to measure the value of a Parameter." ;
+             rdfs:label "measurement"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Parameter
+wotdl:Parameter rdf:type owl:Class ;
+           rdfs:comment "expresses the facts known about each State." ;
+           rdfs:label "parameter"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#PreCondition
+wotdl:PreCondition rdf:type owl:Class ;
+              rdfs:comment "In order for a Transition to be applied  to reach the next state, it’s Precondition must hold true. " ;
+              rdfs:label "precondition"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Sensor
+wotdl:Sensor rdf:type owl:Class ;
+        rdfs:subClassOf ssn:Sensor ,
+                        wotdl:Device ;
+        rdfs:comment "Device, agent, or software (simulation) involved in, or implementing, a Procedure. Sensors respond to a Stimulus, e.g., a change in the environment, or Input data composed from the Results of prior Measurement, and generate a Result. Sensors are subclass of Device. Example temperature sensor, air quality sensor, humidity sensor, motion sensor etc." ,
+                     "Sensors are a subclass of Device which measures the current state of the environment. Examples include temperature sensor, humidity sensor, motion sensor. " ;
+        rdfs:label "sensor"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#State
+wotdl:State rdf:type owl:Class ;
+       rdfs:comment "It is used to describe the state of the physical environment" ;
+       rdfs:label "state"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ToggleEffect
+wotdl:ToggleEffect rdf:type owl:Class ;
+              rdfs:subClassOf wotdl:Effect ;
+              rdfs:comment "for switching between the possible values of parameter" ;
+              rdfs:label "toggle effect"@en .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Transition
+wotdl:Transition rdf:type owl:Class ;
+            rdfs:comment "describes the Effect i.e., that is the dynamic change between different states of the environment which are intended to be caused by the Actuation-the expected behavior which may not necessarily occur due to external influences, unpredicted behavior, etc. performed by Actuators and Precondition." ;
+            rdfs:label "transition"@en .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
+
+
+
+
+<#Fan>
+    a wotdl:Actuator ;
+    wotdl:hasTransition <#TurnOffTransition>, <#FanSpeedSetTransition> , <#IncreaseSpeedTransition>, <#DecreaseSpeedTransition>;
+    wotdl:name "dc_motor_fan"^^xsd:string ;
+    wotdl:type "fan".
+
+
+<#TurnOffTransition>
+	a wotdl:Transition;
+	wotdl:hasPreCondition <#FanPC>;
+	wotdl:hasActuation <#FanTurnOff> ;
+  wotdl:hasEffect <#IncreaseTemperature> , <#FanPowerState> .
+
+
+<#FanPC>
+	a wotdl:PreCondition;
+	wotdl:on <#FanPowerState>;
+	wotdl:operation "op:numeric-equal";
+	wotdl:value "on"^^xsd:string.
+
+<#FanPowerState>
+    a wotdl:Parameter ;
+    wotdl:name "FanPowerState";
+    wotdl:type "OnOff".
+
+
+ <#FanTurnOff>
+  	a wotdl:HttpRequest;
+  	wotdl:httpMethod "POST"^^xsd:string;
+	wotdl:name "fan_turn_off"^^xsd:string;
+	wotdl:url "http://10.0.1.122/fan/off"^^xsd:string.
+
+
+<#IncreaseTemperature>
+  a wotdl:IncreaseEffect ;
+  wotdl:affects <#Temperature> .
+
+
+<#Temperature>
+    a wotdl:Parameter ;
+    wotdl:name "Temperature";
+    wotdl:type xsd:decimal.
+
+
+<#FanSpeedSetTransition>
+	a wotdl:Transition;
+	wotdl:hasActuation <#FanSet> ;
+    wotdl:hasEffect <#FanOnEffect> , <#FanSetEffect> .
+
+
+<#FanSet> 
+    a wotdl:HttpRequest ;
+    wotdl:httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        targetSpeed:
+          type: number
+      required:
+        - targetSpeed"""^^xsd:decimal ;
+    wotdl:httpMethod "POST"^^xsd:string ;
+    wotdl:name "fan_set"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/fan"^^xsd:string.
+
+
+<#FanOnEffect>
+    a wotdl:FixedValueEffect ;
+    wotdl:affects <#FanPowerState> ;
+    wotdl:value "on"^^xsd:string .
+
+
+<#FanSetEffect> 
+   a wotdl:FixedValueEffect ;
+   wotdl:affects <#Speed> , <#Temperature> .
+
+
+<#Speed>
+    a wotdl:Parameter ;
+    wotdl:name "Speed";
+    wotdl:type xsd:decimal.
+
+<#IncreaseSpeedTransition>
+	a wotdl:Transition;
+	wotdl:hasPreCondition <#FanPC>;
+	wotdl:hasActuation <#IncreaseFanSpeed>;
+	wotdl:hasEffect <#DecreaseTemperature> , <#IncreaseSpeed>.
+
+
+
+<#IncreaseFanSpeed> 
+    a wotdl:HttpRequest ;
+    wotdl:httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        increment:
+          type: number
+      required:
+        - increment"""^^xsd:decimal ;
+    wotdl:httpMethod "POST"^^xsd:string ;
+    wotdl:name "increase_fan_speed"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/fan"^^xsd:string.
+
+
+<#DecreaseTemperature>
+  a wotdl:DecreaseEffect ;
+  wotdl:affects <#Temperature> .
+
+
+<#IncreaseSpeed>
+  a wotdl:IncreaseEffect ;
+  wotdl:affects <#Speed> ;
+  wotdl:increment "1"^^xsd:decimal.
+
+
+<#DecreaseSpeedTransition>
+	a wotdl:Transition;
+	wotdl:hasPreCondition <#FanPC>;
+	wotdl:hasActuation <#DecreaseFanSpeed>;
+	wotdl:hasEffect <#IncreaseTemperature> , <#DecreaseSpeed>.
+
+
+
+<#DecreaseFanSpeed> 
+    a wotdl:HttpRequest ;
+    wotdl:httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        decrement:
+          type: number
+      required:
+        - decrement"""^^xsd:decimal ;
+    wotdl:httpMethod "POST"^^xsd:string ;
+    wotdl:name "decrease_fan_speed"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/fan"^^xsd:string.
+
+
+
+<#DecreaseSpeed>
+  a wotdl:IncreaseEffect ;
+  wotdl:affects <#Speed> ;
+  wotdl:decrement "1"^^xsd:decimal.
+
+
+<#light>
+    a wotdl:Sensor ;
+    wotdl:hasMeasurement <#LightM>;
+    wotdl:name "get_lightIntensity"^^xsd:string ;
+    wotdl:type "fan".
+
+
+<#LightM>
+    a wotdl:HttpRequest , wotdl:Measurement ;
+    wotdl:measures <#AmbientLuminosity> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "GetAmbientLuminosity"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/lights"^^xsd:string .
+
+<#AmbientLuminosity>
+  a wotdl:Parameter;
+  wotdl:name "AmbientLuminosity".
+
+  <#PhilipsHue>
+    a wotdl:CompositeDevice ;
+    wotdl:hasActuator <#LampActuator> ;
+    wotdl:name "philipshue"^^xsd:string ;
+    wotdl:type "lamp"^^xsd:string .
+
+
+<#LampActuator>
+    a wotdl:Actuator ;
+    wotdl:hasTransition <#LampOffTransition> , <#LampOnTransition>.
+
+<#LampOffTransition> 
+    a wotdl:Transition ;
+    wotdl:hasPreCondition <#LampOffPrecondition>;
+    wotdl:hasActuation <#LampOff> ;
+    wotdl:hasEffect <#DecreaseBrightness> , <#TurnLampOff> .
+
+
+<#LampOffPrecondition>
+    a wotdl:PreCondition ;
+    wotdl:on <#LampPowerState> ;
+    wotdl:value "on"^^rdfs:Literal .
+
+<#LampOff>
+    a wotdl:HttpRequest ;
+    wotdl:httpBody """required: true
+    wotdl:httpMethod "PUT"^^xsd:string ;
+    wotdl:name "switch_off_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/lights/off"^^xsd:string .
+
+
+<#DecreaseBrightness>
+    a wotdl:DecreaseEffect ;
+    :affects :AmbientLuminosity .
+
+<#AmbientLuminosity>
+    a wotdl:Parameter;
+    wotdl:name "AmbientLuminosity".
+
+
+<#TurnLampOff> 
+    a wotdl:FixedValueEffect ;
+    wotdl:affects :LampPowerState ;
+    wotdl:value "off"^^rdfs:Literal .
+
+<#LampOnTransition> 
+    a wotdl:Transition ;
+    wotdl:hasPreCondition <#LampOnPrecondition> ;
+    wotdl:hasActuation <#LampOn> ;
+    wotdl:hasEffect <#IncreaseBrightness> , <#TurnLampOn> .
+    
+<#LampOnPrecondition> 
+    a wotdl:PreCondition ;
+    wotdl:on <#LampPowerState> ;
+    wotdl:value "off"^^rdfs:Literal .
+
+<#LampPowerState>
+    a wotdl:Parameter ;
+    wotdl:name "LampPowerState"^^xsd:string ;
+    wotdl:type "onoff".
+
+
+<#LampOn> 
+    a wotdl:HttpRequest ;
+    wotdl:httpMethod "PUT"^^xsd:string ;
+    wotdl:name "switch_on_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/lights/on"^^xsd:string .
+
+
+<#TurnLampOn> rdf:type wotdl:FixedValueEffect ;
+             wotdl:affects <#LampPowerState> ;
+             wotdl:value "on"^^rdfs:Literal .
+
+
+<#temperature>
+    a wotdl:Sensor ;
+    wotdl:hasMeasurement <#TemperatureM>;
+  wotdl:name "get_temperature"^^xsd:string ;
+    wotdl:type "temperature".
+
+<#TemperatureM>
+    a wotdl:HttpRequest , wotdl:Measurement ;
+    wotdl:measures <#AmbientTemperature> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "GetAmbientTemperature"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/temperature"^^xsd:string .
+
+<#AmbientTemperature>
+  a wotdl:Parameter;
+  wotdl:name "AmbientTemperature".
+
+<#humidity>
+    a wotdl:Sensor ;
+    wotdl:hasMeasurement <#HumidityM>;
+  wotdl:name "get_humidity"^^xsd:string ;
+    wotdl:type "humidity".
+
+<#HumidityM>
+    a wotdl:HttpRequest, wotdl:Measurement ;
+    wotdl:measures <#AmbientHumidity> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "GetAmbientHumidity"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/humidity"^^xsd:string .
+
+<#AmbientHumidity>
+  a wotdl:Parameter;
+  wotdl:name "AmbientHumidity".
+
+  
+
+<#Thermostat>
+    a wotdl:Actuator ;
+    wotdl:hasTransition :ThermostatTransition ;
+    wotdl:name "thermostat"^^xsd:string ;
+    wotdl:type "thermostat".
+
+
+<#ThermostatTransition>
+    a wotdl:Transition ;
+    wotdl:hasActuation <#ThermostatSet> ;
+    wotdl:hasEffect <#HeatingOnEffect> , <#ThermostatEffect> .
+
+
+<#ThermostatSet> 
+  a wotdl:HttpRequest ;
+  wotdl:httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+    targetTemperature:
+      type: number
+      required:
+        - targetTemperature"""^^xsd:string ;
+  wotdl:httpMethod "PUT"^^xsd:string ;
+  wotdl:name "thermostat_set"^^xsd:string ;
+  wotdl:url "http://10.0.1.122/thermostat"^^xsd:string .
+
+<#HeatingOnEffect>
+    a wotdl:FixedValueEffect ;
+    wotdl:affects <#HeatingPowerState> ;
+    wotdl:value "on"^^xsd:string .
+
+
+  <#ThermostatEffect> 
+    a wotdl:IncreaseEffect ;
+    wotdl:affects <#Temperature> .
+
+
+<#Temperature>
+    a wotdl:Parameter ;
+    wotdl:name "Temperature";
+    wotdl:type xsd:decimal.
+
+
+<#HeatingPowerState>
+    a wotdl:Parameter ;
+    wotdl:name "HeatingPowerState";
+    wotdl:type "OnOff".
+
+
+<#Heating>
+  a wotdl:Actuator ;
+  wotdl:hasTransition <#HeatingOffTransition>, <#HeatingOnTransition>;
+  wotdl:name "relay heating"^^xsd:string ;
+  wotdl:type "heating".
+
+
+<#HeatingOffTransition>
+  a wotdl:Transition;
+  wotdl:hasPreCondition <#HeatingOffPrecondition>;
+  wotdl:hasActuation <#HeatingOff>;
+  wotdl:hasEffect <#DecreaseTemperature>, <#HeatingOffEffect>.
+
+
+<#HeatingOffPrecondition>
+  a wotdl:PreCondition ;
+  wotdl:on <#HeatingPowerState> ;
+  wotdl:value "on"^^xsd:string .
+
+<#HeatingOff>
+  a wotdl:HttpRequest ;
+  wotdl:httpMethod "POST"^^xsd:string ;
+  wotdl:name "deactivate_heating"^^xsd:string ;
+  wotdl:url "http://10.0.1.122/heating/off"^^xsd:string .
+
+
+<#DecreaseTemperature>
+  a wotdl:DecreaseEffect ;
+  wotdl:affects <#Temperature> .
+
+
+<#HeatingOffEffect>
+  a wotdl:FixedValueEffect ;
+  wotdl:affects <#HeatingPowerState> ;
+  wotdl:value "off"^^xsd:string .
+
+
+<#HeatingOnTransition>
+  a wotdl:Transition ;
+  wotdl:hasActuation <#HeatingOn> ;
+  wotdl:hasEffect <#HeatingOnEffect> , <#IncreaseTemperature> ;
+  wotdl:hasPreCondition <#HeatingOnPrecondition> .
+
+
+<#HeatingOn>
+  a wotdl:HttpRequest ;
+  wotdl:httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+    power:
+      type: number
+      required:
+        - power"""^^xsd:string ;
+  wotdl:httpMethod "POST"^^xsd:string ;
+  wotdl:name "activate_heating"^^xsd:string ;
+  wotdl:url "http://10.0.1.122/heating/on"^^xsd:string .
+
+
+<#HeatingOnEffect> 
+  a wotdl:FixedValueEffect ;
+  wotdl:affects <#HeatingPowerState> ;
+  wotdl:value "on"^^xsd:string .
+
+
+<#IncreaseTemperature>
+  a wotdl:IncreaseEffect ;
+  wotdl:affects <#Temperature> .
+
+
+<#HeatingOnPrecondition>
+  a wotdl:PreCondition ;
+  wotdl:on <#HeatingPowerState> ;
+  wotdl:value "off"^^xsd:string .
+
+
