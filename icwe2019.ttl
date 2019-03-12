@@ -240,6 +240,7 @@ wotdl:Actuator rdf:type owl:Class ;
 
 ###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#CompositeDevice
 wotdl:CompositeDevice rdf:type owl:Class ;
+                 rdfs:subClassOf wotdl:Device ;
                  rdfs:comment "specifies that a hardware device can have multiple components where each component can be controlled independently. A  CompositeDevice  can have a series of Actuator and Sensor. For example, a Raspberry Pi equipped with a SenseHat is a  CompositeDevice with a set of sensors and actuators i.e., LED board that are connected to it. " ;
                  rdfs:label "composite device"@en .
 
@@ -377,7 +378,7 @@ wotdl:Transition rdf:type owl:Class ;
 
 
  <#FanTurnOff>
-  	a wotdl:HttpRequest;
+  	a wotdl:HttpRequest, wotdl:Actuation;
   	wotdl:httpMethod "POST"^^xsd:string;
 	wotdl:name "fan_turn_off"^^xsd:string;
 	wotdl:url "http://10.0.1.122/fan/off"^^xsd:string.
@@ -401,7 +402,7 @@ wotdl:Transition rdf:type owl:Class ;
 
 
 <#FanSet> 
-    a wotdl:HttpRequest ;
+    a wotdl:HttpRequest, wotdl:Actuation ;
     wotdl:httpBody """required: true
 content:
   application/x-www-form-urlencoded:
@@ -442,7 +443,7 @@ content:
 
 
 <#IncreaseFanSpeed> 
-    a wotdl:HttpRequest ;
+    a wotdl:HttpRequest, wotdl:Actuation ;
     wotdl:httpBody """required: true
 content:
   application/x-www-form-urlencoded:
@@ -455,7 +456,7 @@ content:
         - increment"""^^xsd:decimal ;
     wotdl:httpMethod "POST"^^xsd:string ;
     wotdl:name "increase_fan_speed"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/fan"^^xsd:string.
+    wotdl:url "http://10.0.1.122/fan/increase"^^xsd:string.
 
 
 <#DecreaseTemperature>
@@ -478,7 +479,7 @@ content:
 
 
 <#DecreaseFanSpeed> 
-    a wotdl:HttpRequest ;
+    a wotdl:HttpRequest, wotdl:Actuation ;
     wotdl:httpBody """required: true
 content:
   application/x-www-form-urlencoded:
@@ -491,7 +492,7 @@ content:
         - decrement"""^^xsd:decimal ;
     wotdl:httpMethod "POST"^^xsd:string ;
     wotdl:name "decrease_fan_speed"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/fan"^^xsd:string.
+    wotdl:url "http://10.0.1.122/fan/decrease"^^xsd:string.
 
 
 
@@ -504,7 +505,7 @@ content:
 <#light>
     a wotdl:Sensor ;
     wotdl:hasMeasurement <#LightM>;
-    wotdl:name "get_lightIntensity"^^xsd:string ;
+    wotdl:name "light_sensor"^^xsd:string ;
     wotdl:type "fan".
 
 
@@ -512,8 +513,8 @@ content:
     a wotdl:HttpRequest , wotdl:Measurement ;
     wotdl:measures <#AmbientLuminosity> ;
     wotdl:httpMethod "GET"^^xsd:string ;
-    wotdl:name "GetAmbientLuminosity"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/lights"^^xsd:string .
+    wotdl:name "get_light_intensity"^^xsd:string ;
+    wotdl:url "http://10.0.1.122/ambientlight"^^xsd:string .
 
 <#AmbientLuminosity>
   a wotdl:Parameter;
@@ -528,6 +529,7 @@ content:
 
 <#LampActuator>
     a wotdl:Actuator ;
+    wotdl:name "philipshue"^^xsd:string ;
     wotdl:hasTransition <#LampOffTransition> , <#LampOnTransition>.
 
 <#LampOffTransition> 
@@ -543,7 +545,7 @@ content:
     wotdl:value "on"^^rdfs:Literal .
 
 <#LampOff>
-    a wotdl:HttpRequest ;
+    a wotdl:HttpRequest, wotdl:Actuation ;
     wotdl:httpMethod "PUT"^^xsd:string ;
     wotdl:name "switch_off_lamp"^^xsd:string ;
     wotdl:url "http://10.0.1.122/lights/off"^^xsd:string .
@@ -595,14 +597,14 @@ content:
 <#temperature>
     a wotdl:Sensor ;
     wotdl:hasMeasurement <#TemperatureM>;
-  wotdl:name "get_temperature"^^xsd:string ;
+  wotdl:name "temperature_humidity_sensor"^^xsd:string ;
     wotdl:type "temperature".
 
 <#TemperatureM>
     a wotdl:HttpRequest , wotdl:Measurement ;
     wotdl:measures <#AmbientTemperature> ;
     wotdl:httpMethod "GET"^^xsd:string ;
-    wotdl:name "GetAmbientTemperature"^^xsd:string ;
+    wotdl:name "get_temperature"^^xsd:string ;
     wotdl:url "http://10.0.1.122/temperature"^^xsd:string .
 
 <#AmbientTemperature>
@@ -612,14 +614,14 @@ content:
 <#humidity>
     a wotdl:Sensor ;
     wotdl:hasMeasurement <#HumidityM>;
-  wotdl:name "get_humidity"^^xsd:string ;
+  wotdl:name "temperature_humidity_sensor"^^xsd:string ;
     wotdl:type "humidity".
 
 <#HumidityM>
     a wotdl:HttpRequest, wotdl:Measurement ;
     wotdl:measures <#AmbientHumidity> ;
     wotdl:httpMethod "GET"^^xsd:string ;
-    wotdl:name "GetAmbientHumidity"^^xsd:string ;
+    wotdl:name "get_humidity"^^xsd:string ;
     wotdl:url "http://10.0.1.122/humidity"^^xsd:string .
 
 <#AmbientHumidity>
@@ -642,15 +644,15 @@ content:
 
 
 <#ThermostatSet> 
-  a wotdl:HttpRequest ;
+  a wotdl:HttpRequest, wotdl:Actuation ;
   wotdl:httpBody """required: true
 content:
   application/x-www-form-urlencoded:
     schema:
       type: object
       properties:
-    targetTemperature:
-      type: number
+        targetTemperature:
+          type: number
       required:
         - targetTemperature"""^^xsd:string ;
   wotdl:httpMethod "PUT"^^xsd:string ;
@@ -683,7 +685,7 @@ content:
 <#Heating>
   a wotdl:Actuator ;
   wotdl:hasTransition <#HeatingOffTransition>, <#HeatingOnTransition>;
-  wotdl:name "relay heating"^^xsd:string ;
+  wotdl:name "relay_heating"^^xsd:string ;
   wotdl:type "heating".
 
 
@@ -700,7 +702,7 @@ content:
   wotdl:value "on"^^xsd:string .
 
 <#HeatingOff>
-  a wotdl:HttpRequest ;
+  a wotdl:HttpRequest, wotdl:Actuation ;
   wotdl:httpMethod "POST"^^xsd:string ;
   wotdl:name "deactivate_heating"^^xsd:string ;
   wotdl:url "http://10.0.1.122/heating/off"^^xsd:string .
@@ -725,15 +727,15 @@ content:
 
 
 <#HeatingOn>
-  a wotdl:HttpRequest ;
+  a wotdl:HttpRequest, wotdl:Actuation ;
   wotdl:httpBody """required: true
 content:
   application/x-www-form-urlencoded:
     schema:
       type: object
       properties:
-    power:
-      type: number
+        power:
+          type: number
       required:
         - power"""^^xsd:string ;
   wotdl:httpMethod "POST"^^xsd:string ;
