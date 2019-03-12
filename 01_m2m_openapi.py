@@ -6,9 +6,9 @@ from rdflib import OWL, RDFS, Namespace
 from urllib.parse import urlparse
 from collections import defaultdict
 
-IN = 'sample.ttl'
+IN = 'icwe2019.ttl'
 
-VSR = Namespace('http://www.tu-chemnitz.de/vsr/ontology#')
+WOTDL = Namespace('http://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#')
 
 instance = rdflib.Graph()
 instance.parse(IN, format='n3')
@@ -17,20 +17,20 @@ find_http_requests = """SELECT ?d ?device ?http_request ?name ?method ?url ?body
        WHERE {
             ?d a ?device_subclass.
             ?device_subclass a owl:Class.
-            ?device_subclass rdfs:subClassOf vsr:Device.
-            OPTIONAL{ ?d vsr:name ?device }
-            ?http_request a vsr:HttpRequest .
-            OPTIONAL{?http_request vsr:name ?name}
-            ?http_request vsr:httpMethod ?method .
-            ?http_request vsr:url ?url . 
-            OPTIONAL{?http_request vsr:httpBody ?body}
+            ?device_subclass rdfs:subClassOf wotdl:Device.
+            OPTIONAL{ ?d wotdl:name ?device }
+            ?http_request a wotdl:HttpRequest .
+            OPTIONAL{?http_request wotdl:name ?name}
+            ?http_request wotdl:httpMethod ?method .
+            ?http_request wotdl:url ?url . 
+            OPTIONAL{?http_request wotdl:httpBody ?body}
             {
-                ?d vsr:hasTransition ?t.
-                ?t vsr:hasActuation ?http_request.
+                ?d wotdl:hasTransition ?t.
+                ?t wotdl:hasActuation ?http_request.
             } 
             UNION 
             { 
-                ?d vsr:hasMeasurement ?http_request.                          
+                ?d wotdl:hasMeasurement ?http_request.                          
             }
         }
 """
@@ -43,7 +43,7 @@ find_http_requests = """SELECT ?d ?device ?http_request ?name ?method ?url ?body
 
 paths = defaultdict(dict)
 
-http_requests = instance.query(find_http_requests, initNs={'vsr': VSR, 'rdfs': RDFS, 'owl': OWL})
+http_requests = instance.query(find_http_requests, initNs={'wotdl': WOTDL, 'rdfs': RDFS, 'owl': OWL})
 resources = defaultdict(list)
 
 for device, devicename, http_request, name, method, url, body in http_requests:
@@ -97,7 +97,7 @@ open_api = {
         'version': '0.0.1',
         'title': 'TODO',
     },
-    'servers': [{'url': 'https://localhost:' + str(port) + '/api'}],
+    'servers': [{'url': 'https://10.0.1.122:' + str(port) + '/api'}],
     'paths': dict(paths)
 }
 

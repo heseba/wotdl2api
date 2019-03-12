@@ -1,80 +1,85 @@
-@prefix : <http://www.tu-chemnitz.de/vsr/ontology#> .
+@prefix : <https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ssn: <http://www.w3.org/ns/ssn/> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.tu-chemnitz.de/vsr/ontology> .
+@prefix owls: <http://www.daml.org/services/owl-s/1.2/Profile.owl#> .
+@base <https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl> .
 
-<http://www.tu-chemnitz.de/vsr/ontology> rdf:type owl:Ontology .
+<https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl> rdf:type owl:Ontology ;
+                                                                    rdfs:comment "The WoTDL ontology describes the key concepts of Artificial Intelligence Planning-based End User Development applications for the WoT."^^xsd:string ;
+                                                                    owl:versionInfo "1.0" .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-###  http://www.tu-chemnitz.de/vsr/ontology#affects
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#affects
 :affects rdf:type owl:ObjectProperty ;
          rdfs:domain :Effect ;
          rdfs:range :Parameter .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasActuation
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasActuation
 :hasActuation rdf:type owl:ObjectProperty ;
               rdfs:domain :Transition ;
               rdfs:range :Actuation .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasActuator
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasActuator
 :hasActuator rdf:type owl:ObjectProperty ;
              rdfs:domain :CompositeDevice ;
              rdfs:range :Actuator .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasEffect
 :hasEffect rdf:type owl:ObjectProperty ;
            rdfs:domain :Transition ;
            rdfs:range :Effect .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasMeasurement
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasMeasurement
 :hasMeasurement rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf owl:topObjectProperty ;
                 rdfs:domain :Sensor ;
                 rdfs:range :Measurement .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasParameter
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasParameter
 :hasParameter rdf:type owl:ObjectProperty ;
               rdfs:domain :GoalState ,
                           :InitialState ;
               rdfs:range :Parameter .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasPreCondition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasPreCondition
 :hasPreCondition rdf:type owl:ObjectProperty ;
                  rdfs:domain :Transition ;
                  rdfs:range :PreCondition .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasSensor
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasSensor
 :hasSensor rdf:type owl:ObjectProperty ;
            rdfs:domain :CompositeDevice ;
            rdfs:range :Sensor .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#hasTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#hasTransition
 :hasTransition rdf:type owl:ObjectProperty ;
                rdfs:domain :Actuator ;
                rdfs:range :Transition .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#measures
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#measures
 :measures rdf:type owl:ObjectProperty ;
           rdfs:domain :Measurement ;
           rdfs:range :Parameter .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#on
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#on
 :on rdf:type owl:ObjectProperty ;
     rdfs:domain :PreCondition ;
     rdfs:range :Parameter .
@@ -84,35 +89,42 @@
 #    Data properties
 #################################################################
 
-###  http://www.tu-chemnitz.de/vsr/ontology#decrement
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#decrement
 :decrement rdf:type owl:DatatypeProperty ;
            rdfs:domain :DecreaseEffect ;
            rdfs:range xsd:decimal ,
                       xsd:double ,
-                      xsd:float .
+                      xsd:float ;
+            rdfs:comment "The amount of decrease an effect has on an environmental parameter";
+           rdfs:label "Decrement".
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#httpBody
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#httpBody
 :httpBody rdf:type owl:DatatypeProperty ;
           rdfs:comment "OpenAPI 3.0 compliant body specification" ;
-          rdfs:seeAlso "https://swagger.io/docs/specification/describing-request-body/" .
+          rdfs:seeAlso "https://swagger.io/docs/specification/describing-request-body/" ;
+          rdfs:label "HTTP body".
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#httpMethod
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#httpMethod
 :httpMethod rdf:type owl:DatatypeProperty ;
             rdfs:domain :HttpRequest ;
-            rdfs:range xsd:string .
+            rdfs:range xsd:string ;
+            rdfs:comment "HTTP defines a set of request methods to indicate the desired action to be performed for a given resource i.e. get, post, put, delete";
+            rdfs:label "HTTP Method".
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#increment
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#increment
 :increment rdf:type owl:DatatypeProperty ;
            rdfs:domain :IncreaseEffect ;
            rdfs:range xsd:decimal ,
                       xsd:double ,
-                      xsd:float .
+                      xsd:float ;
+           rdfs:comment "The amount of increase an effect has on an environmental parameter";
+           rdfs:label "Increment".
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#name
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#name
 :name rdf:type owl:DatatypeProperty ;
       rdfs:subPropertyOf owl:topDataProperty ;
       rdfs:domain :Actuation ,
@@ -121,149 +133,194 @@
                   :Parameter .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#status
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#status
 :status rdf:type owl:DatatypeProperty ;
         rdfs:domain :Effect ,
                     :PreCondition ;
         rdfs:range xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#timeToEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#timeToEffect
 :timeToEffect rdf:type owl:DatatypeProperty ;
               rdfs:domain :Effect ;
               rdfs:range xsd:positiveInteger ;
-              rdfs:comment "The duration it takes for the desired effect to take place" .
+              rdfs:comment "The duration it takes for the desired effect to take place" ;
+              rdfs:label "Time To Effect".
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#type
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#type
 :type rdf:type owl:DatatypeProperty ;
       rdfs:domain :CompositeDevice ,
                   :Parameter ;
       rdfs:range xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#url
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#url
 :url rdf:type owl:DatatypeProperty ;
      rdfs:domain :HttpRequest ;
-     rdfs:range xsd:string .
+     rdfs:range xsd:string ;
+     rdfs:comment "It is a reference to a web resource that specifies its location on a computer network and a mechanism for retrieving it." ;
+     rdfs:label "URL".
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#value
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#value
 :value rdf:type owl:DatatypeProperty ;
        rdfs:domain :FixedValueEffect ,
                    :PreCondition ;
        rdfs:range rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#waitAfterActuation
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#waitAfterActuation
 :waitAfterActuation rdf:type owl:DatatypeProperty ;
                     rdfs:domain :Actuation ;
-                    rdfs:range xsd:positiveInteger .
+                    rdfs:range xsd:positiveInteger ;
+                    rdfs:comment "The duration it takes before the actuation can take place for example in some cases the device needs to first startup before the actuation can be triggered." ;
+              		rdfs:label "Wait After Actuation".
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Actuation
-:Actuation rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Actuation
+:Actuation rdf:type owl:Class
+    rdfs:subclassof ssn:Actuation
+		rdfs:comment "An Actuation carries out an (Actuation) Transition to change the state of the world using an Actuator. " ;
+        rdfs:label "actuation"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Actuator
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Actuator
 :Actuator rdf:type owl:Class ;
-          rdfs:subClassOf :Device .
+          rdfs:subClassOf :Device ;
+		rdfs:comment "A device that is used by, or implements, an (Actuation) Procedure that changes the state of the world. " ;
+        rdfs:label "actuator"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#CompositeDevice
-:CompositeDevice rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#CompositeDevice
+:CompositeDevice rdf:type owl:Class
+		rdfs:comment "specifies that a hardware device can have multiple components where each component can be controlled independently. A  CompositeDevice  can have a series of Actuator and Sensor. For example, a Raspberry Pi equipped with a SenseHat is a  CompositeDevice with a set of sensors and actuators i.e., LED board that are connected to it. " ;
+        rdfs:label "composite device"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#DecreaseEffect
 :DecreaseEffect rdf:type owl:Class ;
-                rdfs:subClassOf :Effect .
+                rdfs:subClassOf :Effect
+		rdfs:comment "It is used for decreasing a parameter" ;
+        rdfs:label "decrease effect"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Device
-:Device rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Device
+ssn:Device rdf:type owl:Class ;
+		rdfs:comment "A device that is used by, or implements, an (Actuation) Procedure that changes the state of the world" ;
+        rdfs:label "device"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Effect
-:Effect rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Effect
+owls:Effect rdf:type owl:Class
+		rdfs:comment "The transformation of Actuations performed by Actuators and the affects it has on a physical parameter leading to a state change in the environment" ;
+        rdfs:label "effect"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#FixedValueEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#FixedValueEffect
 :FixedValueEffect rdf:type owl:Class ;
-                  rdfs:subClassOf :Effect .
+                  rdfs:subClassOf :Effect
+		rdfs:comment "It is used for assigning constant values to a parameter" ;
+        rdfs:label "fixed value effect"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#GoalState
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#GoalState
 :GoalState rdf:type owl:Class ;
-           rdfs:subClassOf :State .
+           rdfs:subClassOf :State
+		rdfs:comment "It refers to the desired state of the environment" ;
+        rdfs:label "goal state"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HttpRequest
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HttpRequest
 :HttpRequest rdf:type owl:Class ;
              rdfs:subClassOf :Actuation ,
-                             :Measurement .
+                             :Measurement
+		rdfs:comment "Provides all the required information to execute an HTTP request to perform either Actuation or Measurement. The HTTPRequest includes HTTPMethod (GET, POST, PUT), HTTPheader, URL, and the body." ;
+        rdfs:label "HTTP request"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#IncreaseEffect
 :IncreaseEffect rdf:type owl:Class ;
-                rdfs:subClassOf :Effect .
+                rdfs:subClassOf :Effect
+		rdfs:comment "for increasing a parameter" ;
+        rdfs:label "increase effect"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#InitialState
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#InitialState
 :InitialState rdf:type owl:Class ;
-              rdfs:subClassOf :State .
+              rdfs:subClassOf :State
+		rdfs:comment "It refers to the state at the start of planning." ;
+        rdfs:label "initial state"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Measurement
-:Measurement rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Measurement
+:Measurement rdf:type owl:Class
+		rdfs:comment "It is triggered on a Sensor device to measure the value of a Parameter." ;
+        rdfs:label "measurement"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Parameter
-:Parameter rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Parameter
+:Parameter rdf:type owl:Class
+		rdfs:comment "expresses the facts known about each State." ;
+        rdfs:label "parameter"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#PreCondition
-:PreCondition rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#PreCondition
+owls:PreCondition rdf:type owl:Class
+		rdfs:comment "In order for a Transition to be applied  to reach the next state, it’s Precondition must hold true. " ;
+        rdfs:label "precondition"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Sensor
-:Sensor rdf:type owl:Class ;
-        rdfs:subClassOf :Device .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Sensor
+ssn:Sensor rdf:type owl:Class ;
+        rdfs:subClassOf :Device ;
+        rdfs:comment "Device, agent, or software (simulation) involved in, or implementing, a Procedure. Sensors respond to a Stimulus, e.g., a change in the environment, or Input data composed from the Results of prior Measurement, and generate a Result. Sensors are subclass of Device. Example	temperature sensor, air quality sensor, humidity sensor, motion sensor etc." ;
+        rdfs:label "sensor"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#State
-:State rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#State
+:State rdf:type owl:Class ;
+		rdfs:comment "It is used to describe the state of the physical environment" ;
+        rdfs:label "state"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ToggleEffect
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ToggleEffect
 :ToggleEffect rdf:type owl:Class ;
-              rdfs:subClassOf :Effect .
+              rdfs:subClassOf :Effect ;
+              rdfs:comment "for switching between the possible values of parameter" ;
+        rdfs:label "toggle effect"@en.
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Transition
-:Transition rdf:type owl:Class .
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Transition
+:Transition rdf:type owl:Class ;
+			rdfs:comment "describes the Effect i.e., that is the dynamic change between different states of the environment which are intended to be caused by the Actuation-the expected behavior which may not necessarily occur due to external influences, unpre-dicted behavior, etc. performed by Actuators and Precondition." ;
+        rdfs:label "transition"@en.
+
+
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-###  http://www.tu-chemnitz.de/vsr/ontology#AmbientLuminosity
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#AmbientLuminosity
 :AmbientLuminosity rdf:type owl:NamedIndividual ,
                             :Parameter ;
                    :name "AmbientLuminosity"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#AmbientNoise
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#AmbientNoise
 :AmbientNoise rdf:type owl:NamedIndividual ,
                        :Parameter ;
               :name "AmbientNoise"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#CloseTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#CloseTransition
 :CloseTransition rdf:type owl:NamedIndividual ,
                           :Transition ;
                  :hasActuation :ShadesClose ;
@@ -273,59 +330,25 @@
                  :name "close"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseBrightness
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#DecreaseBrightness
 :DecreaseBrightness rdf:type owl:NamedIndividual ,
                              :DecreaseEffect ;
                     :affects :AmbientLuminosity .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseNoise
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#DecreaseNoise
 :DecreaseNoise rdf:type owl:NamedIndividual ,
                         :DecreaseEffect ;
                :affects :AmbientNoise .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#DecreaseTemperature
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#DecreaseTemperature
 :DecreaseTemperature rdf:type owl:NamedIndividual ,
                               :DecreaseEffect ;
                      :affects :Temperature .
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Thermostat
-:Thermostat rdf:type owl:NamedIndividual ,
-                  :Actuator ;
-         :hasTransition :ThermostatTransition;
-         :name "thermostat"^^xsd:string .
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ThermostatTransition
-:ThermostatTransition rdf:type owl:NamedIndividual ,
-                               :Transition ;
-                      :hasActuation :ThermostatSet ;
-                      :hasEffect :ThermostatEffect, :HeatingOnEffect.
-
-###  http://www.tu-chemnitz.de/vsr/ontology#ThermostatEffect
-:ThermostatEffect rdf:type owl:NamedIndividual ,
-                          :FixedValueEffect ;
-                 :affects :Temperature.
-
-###  http://www.tu-chemnitz.de/vsr/ontology#ThermostatSet
-:ThermostatSet rdf:type owl:NamedIndividual ,
-                    :HttpRequest ;
-           :httpBody """required: true
-content:
-  application/x-www-form-urlencoded:
-    schema:
-      type: object
-      properties:
-        targetTemperature:
-          type: number
-      required:
-        - targetTemperature"""^^xsd:string ;
-           :httpMethod "PUT"^^xsd:string ;
-           :name "thermostat_set"^^xsd:string ;
-           :url "http://10.0.1.113/thermostat"^^xsd:string .
-
-
-###  http://www.tu-chemnitz.de/vsr/ontology#Heating
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Heating
 :Heating rdf:type owl:NamedIndividual ,
                   :Actuator ;
          :hasTransition :HeatingOffTransition ,
@@ -333,29 +356,29 @@ content:
          :name "relay heating"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOff
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOff
 :HeatingOff rdf:type owl:NamedIndividual ,
                      :HttpRequest ;
             :httpMethod "POST"^^xsd:string ;
-            :name "SwitchOffHeating"^^xsd:string ;
+            :name "heating_off"^^xsd:string ;
             :url "http://10.0.1.113/heating/off"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOffEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOffEffect
 :HeatingOffEffect rdf:type owl:NamedIndividual ,
                            :FixedValueEffect ;
                   :affects :HeatingPowerState ;
                   :value "off"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOffPrecondition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOffPrecondition
 :HeatingOffPrecondition rdf:type owl:NamedIndividual ,
                                  :PreCondition ;
                         :on :HeatingPowerState ;
                         :value "on"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOffTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOffTransition
 :HeatingOffTransition rdf:type owl:NamedIndividual ,
                                :Transition ;
                       :hasActuation :HeatingOff ;
@@ -364,7 +387,7 @@ content:
                       :hasPreCondition :HeatingOffPrecondition .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOn
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOn
 :HeatingOn rdf:type owl:NamedIndividual ,
                     :HttpRequest ;
            :httpBody """required: true
@@ -378,25 +401,25 @@ content:
       required:
         - power"""^^xsd:string ;
            :httpMethod "POST"^^xsd:string ;
-           :name "SwitchOnHeating"^^xsd:string ;
+           :name "heating_on"^^xsd:string ;
            :url "http://10.0.1.113/heating/on"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOnEffect
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOnEffect
 :HeatingOnEffect rdf:type owl:NamedIndividual ,
                           :FixedValueEffect ;
                  :affects :HeatingPowerState ;
                  :value "on"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOnPrecondition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOnPrecondition
 :HeatingOnPrecondition rdf:type owl:NamedIndividual ,
                                 :PreCondition ;
                        :on :HeatingPowerState ;
                        :value "off"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingOnTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingOnTransition
 :HeatingOnTransition rdf:type owl:NamedIndividual ,
                               :Transition ;
                      :hasActuation :HeatingOn ;
@@ -405,46 +428,46 @@ content:
                      :hasPreCondition :HeatingOnPrecondition .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#HeatingPowerState
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#HeatingPowerState
 :HeatingPowerState rdf:type owl:NamedIndividual ,
                             :Parameter .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseBrightness
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#IncreaseBrightness
 :IncreaseBrightness rdf:type owl:NamedIndividual ,
                              :IncreaseEffect ;
                     :affects :AmbientLuminosity ;
                     :increment ""^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseNoise
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#IncreaseNoise
 :IncreaseNoise rdf:type owl:NamedIndividual ,
                         :IncreaseEffect ;
                :affects :AmbientNoise .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#IncreaseTemperature
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#IncreaseTemperature
 :IncreaseTemperature rdf:type owl:NamedIndividual ,
                               :IncreaseEffect ;
                      :affects :Temperature .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOff
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampOff
 :LampOff rdf:type owl:NamedIndividual ,
                   :HttpRequest ;
          :httpMethod "POST"^^xsd:string ;
          :name "SwitchOffLamp"^^xsd:string ;
-         :url "http://10.0.1.113/lights/turnOff"^^xsd:string .
+         :url "http://10.0.1.113/lights/ToggleAndLower"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOffPrecondition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampOffPrecondition
 :LampOffPrecondition rdf:type owl:NamedIndividual ,
                               :PreCondition ;
                      :on :LampPowerState ;
                      :value "on"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOffTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampOffTransition
 :LampOffTransition rdf:type owl:NamedIndividual ,
                             :Transition ;
                    :hasActuation :LampOff ;
@@ -453,22 +476,22 @@ content:
                    :hasPreCondition :LampOffPrecondition .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOn
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampOn
 :LampOn rdf:type owl:NamedIndividual ,
                  :HttpRequest ;
         :httpMethod "POST"^^xsd:string ;
         :name "SwitchOnLamp"^^xsd:string ;
-        :url "http://10.0.1.113/lights/turnOn"^^xsd:string .
+        :url "http://10.0.1.113/lights/ToggleAndHigher"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOnPrecondition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampOnPrecondition
 :LampOnPrecondition rdf:type owl:NamedIndividual ,
                              :PreCondition ;
                     :on :LampPowerState ;
                     :value "off"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampOnTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampOnTransition
 :LampOnTransition rdf:type owl:NamedIndividual ,
                            :Transition ;
                   :hasActuation :LampOn ;
@@ -477,13 +500,13 @@ content:
                   :hasPreCondition :LampOnPrecondition .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#LampPowerState
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#LampPowerState
 :LampPowerState rdf:type owl:NamedIndividual ,
                          :Parameter ;
                 :name "LampPowerState"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Measurement1
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Measurement1
 :Measurement1 rdf:type owl:NamedIndividual ,
                        :HttpRequest ,
                        :Measurement ;
@@ -493,7 +516,7 @@ content:
               :url "http://10.0.1.113/lights"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#OpenTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#OpenTransition
 :OpenTransition rdf:type owl:NamedIndividual ,
                          :Transition ;
                 :hasActuation :ShadesOpen ;
@@ -503,11 +526,11 @@ content:
                 :name "open"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Parameter1
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Parameter1
 :Parameter1 rdf:type owl:NamedIndividual .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#PhilipsHue
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#PhilipsHue
 :PhilipsHue rdf:type owl:NamedIndividual ,
                      :CompositeDevice ;
             :hasActuator :lampActuator ;
@@ -516,14 +539,14 @@ content:
             :type "lamp"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Sensor1
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Sensor1
 :Sensor1 rdf:type owl:NamedIndividual ,
                   :Sensor ;
          :hasMeasurement :Measurement1 ;
          :name "LightSensor1"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Shades
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Shades
 :Shades rdf:type owl:NamedIndividual ,
                  :CompositeDevice ;
         :hasActuator :shadesOpenCloseActuator ;
@@ -531,43 +554,43 @@ content:
         :type "shades"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClose
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ShadesClose
 :ShadesClose rdf:type owl:NamedIndividual ,
                       :HttpRequest ;
              :httpMethod "POST"^^xsd:string ;
              :name "ShadesClose"^^xsd:string ;
-             :url "http://10.0.1.113/shades/close"^^xsd:string .
+             :url "http://10.0.1.113/shades/ToggleAndLower"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesClosePC
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ShadesClosePC
 :ShadesClosePC rdf:type owl:NamedIndividual ,
                         :PreCondition ;
                :on :ShadesPowerState ;
                :value "open"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesOpen
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ShadesOpen
 :ShadesOpen rdf:type owl:NamedIndividual ,
                      :HttpRequest ;
             :httpMethod "POST"^^xsd:string ;
             :name "ShadesOpen"^^xsd:string ;
-            :url "http://10.0.1.113/shades/open"^^xsd:string .
+            :url "http://10.0.1.113/shades/ToggleAndHigher"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesOpenPC
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ShadesOpenPC
 :ShadesOpenPC rdf:type owl:NamedIndividual ,
                        :PreCondition ;
               :on :ShadesPowerState ;
               :value "close"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ShadesPowerState
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ShadesPowerState
 :ShadesPowerState rdf:type owl:NamedIndividual ,
                            :Parameter ;
                   :name "ShadePowerState"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TV
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TV
 :TV rdf:type owl:NamedIndividual ,
              :CompositeDevice ;
     :hasActuator :TvActuator ;
@@ -575,52 +598,91 @@ content:
     :type "tv"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#Temperature
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Temperature
 :Temperature rdf:type owl:NamedIndividual ,
                       :Parameter .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ToggleShadesClose
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#Thermostat
+:Thermostat rdf:type owl:NamedIndividual ,
+                     :Actuator ;
+            :hasTransition :ThermostatTransition ;
+            :name "thermostat"^^xsd:string .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ThermostatEffect
+:ThermostatEffect rdf:type owl:NamedIndividual ,
+                           :FixedValueEffect ;
+                  :affects :Temperature .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ThermostatSet
+:ThermostatSet rdf:type owl:NamedIndividual ,
+                        :HttpRequest ;
+               :httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        targetTemperature:
+          type: number
+      required:
+        - targetTemperature"""^^xsd:string ;
+               :httpMethod "PUT"^^xsd:string ;
+               :name "thermostat_set"^^xsd:string ;
+               :url "http://10.0.1.113/thermostat"^^xsd:string .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ThermostatTransition
+:ThermostatTransition rdf:type owl:NamedIndividual ,
+                               :Transition ;
+                      :hasActuation :ThermostatSet ;
+                      :hasEffect :HeatingOnEffect ,
+                                 :ThermostatEffect .
+
+
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ToggleShadesClose
 :ToggleShadesClose rdf:type owl:NamedIndividual ,
                             :ToggleEffect ;
                    :affects :ShadesPowerState .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#ToggleShadesOpen
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#ToggleShadesOpen
 :ToggleShadesOpen rdf:type owl:NamedIndividual ,
                            :ToggleEffect ;
                   :affects :ShadesPowerState .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnLightOff
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TurnLightOff
 :TurnLightOff rdf:type owl:NamedIndividual ,
                        :FixedValueEffect ;
               :affects :LampPowerState ;
               :value "off"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnLightOn
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TurnLightOn
 :TurnLightOn rdf:type owl:NamedIndividual ,
                       :FixedValueEffect ;
              :affects :LampPowerState ;
              :value "on"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnTvOff
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TurnTvOff
 :TurnTvOff rdf:type owl:NamedIndividual ,
                     :FixedValueEffect ;
            :affects :TvPowerState ;
            :value "off" .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TurnTvOn
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TurnTvOn
 :TurnTvOn rdf:type owl:NamedIndividual ,
                    :FixedValueEffect ;
           :affects :TvPowerState ;
           :value "on"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvActuator
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvActuator
 :TvActuator rdf:type owl:NamedIndividual ,
                      :Actuator ;
             :hasTransition :TvOffTransition ,
@@ -628,7 +690,7 @@ content:
             :name "samsungTV"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOff
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvOff
 :TvOff rdf:type owl:NamedIndividual ,
                 :HttpRequest ;
        :httpMethod "POST"^^xsd:string ;
@@ -636,14 +698,14 @@ content:
        :url "http://10.1.13.14/offof" .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOffPC
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvOffPC
 :TvOffPC rdf:type owl:NamedIndividual ,
                   :PreCondition ;
          :on :TvPowerState ;
          :value "on" .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOffTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvOffTransition
 :TvOffTransition rdf:type owl:NamedIndividual ,
                           :Transition ;
                  :hasActuation :TvOff ;
@@ -652,7 +714,7 @@ content:
                  :hasPreCondition :TvOffPC .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOn
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvOn
 :TvOn rdf:type owl:NamedIndividual ,
                :HttpRequest ;
       :httpMethod "POST"^^xsd:string ;
@@ -660,14 +722,14 @@ content:
       :url "http://10.1.13.14/TV/very/long/path/{path-param}/needed/on?queryParam1={myQueryStuff}" .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOnPC
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvOnPC
 :TvOnPC rdf:type owl:NamedIndividual ,
                  :PreCondition ;
         :on :TvPowerState ;
         :value "off"^^rdfs:Literal .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvOnTransition
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvOnTransition
 :TvOnTransition rdf:type owl:NamedIndividual ,
                          :Transition ;
                 :hasActuation :TvOn ;
@@ -676,21 +738,21 @@ content:
                 :hasPreCondition :TvOnPC .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#TvPowerState
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#TvPowerState
 :TvPowerState rdf:type owl:NamedIndividual ,
                        :Parameter ;
               :name "TvPowerState"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#lampActuator
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#lampActuator
 :lampActuator rdf:type owl:NamedIndividual ,
                        :Actuator ;
               :hasTransition :LampOffTransition ,
                              :LampOnTransition ;
-              :name "philips hue"^^xsd:string .
+              :name "philipshue"^^xsd:string .
 
 
-###  http://www.tu-chemnitz.de/vsr/ontology#shadesOpenCloseActuator
+###  https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#shadesOpenCloseActuator
 :shadesOpenCloseActuator rdf:type owl:NamedIndividual ,
                                   :Actuator ;
                          :hasTransition :CloseTransition ,
