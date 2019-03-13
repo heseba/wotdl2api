@@ -409,10 +409,10 @@ content:
     schema:
       type: object
       properties:
-        targetSpeed:
+        target_speed:
           type: number
       required:
-        - targetSpeed"""^^xsd:decimal ;
+        - target_speed"""^^xsd:decimal ;
     wotdl:httpMethod "POST"^^xsd:string ;
     wotdl:name "fan_set"^^xsd:string ;
     wotdl:url "http://10.0.1.122/fan"^^xsd:string.
