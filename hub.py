@@ -1,7 +1,10 @@
 import importlib
+from .models.heating_thread import HeatingThread
 
 IMPLEMENTATION_PATH = 'wot_api.models'
 print('hub imported')
+
+PERSISTENCE = {'SPEED': 0, 'WORKER': HeatingThread()}
 
 
 def invoke_implementation(function_name, kwargs, request, device):
