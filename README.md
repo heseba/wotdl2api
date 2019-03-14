@@ -1,7 +1,7 @@
 # WoTDL Ontology to REST
 
 ## Overview
-This toolchain allows to generate REST APIs from instances of the [WoTDL OWL Ontology](https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl/wotdl.owl), which is part of the GrOWTH approach for Goal-Oriented End User Development for Web of Things Devices. [1]
+This toolchain allows to generate REST APIs from instances of the [WoTDL OWL Ontology](https://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl/wotdl.owl), which is part of the GrOWTH approach for Goal-Oriented End User Development for Web of Things Devices. [1] WoTDL has been listed on the [LOV4IoT Ontology Catalogue](http://lov4iot.appspot.com/?p=ontologies).
 
 It uses a model-to-model transformation to generate an [OpenAPI](https://openapis.org) specification. 
 The Flask-based REST API is generated using [OpenAPI Generator](https://openapi-generator.tech).
@@ -35,4 +35,4 @@ If you want to use or extend our toolchain, please consider citing the related p
 
 [1] Noura M., Heil S., Gaedke M. (2018) GrOWTH: Goal-Oriented End User Development for Web of Things Devices. In: Mikkonen T., Klamma R., Hernández J. (eds) Web Engineering. ICWE 2018. Lecture Notes in Computer Science, vol 10845. Springer, Cham
 
-[2] Noura M., Heil S., Gaedke M. (2018) WoTDL: Ontology-based Model-driven Web of Things Application Development. Submitted to: ICWE 2019.
+[2] Noura M., Heil S., Gaedke M. (2019) Webifying Heterogenous Internet of Things Devices. Submitted to: ICWE 2019.
