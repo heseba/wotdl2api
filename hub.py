@@ -8,7 +8,7 @@ PERSISTENCE = {}
 INIT_FUNCTION_NAME = 'init'
 
 
-def invoke_implementation(function_name, kwargs, request, device):
+def invoke_implementation(function_name, params, kwargs, request, device):
     import_path = IMPLEMENTATION_PATH + '.' + device
 
     implementation_spec = importlib.util.find_spec(import_path)
@@ -22,6 +22,13 @@ def invoke_implementation(function_name, kwargs, request, device):
         if not hasattr(implementation, function_name):
             return 'Implementation required for %s of device %s' % (function_name, device)
         method = getattr(implementation, function_name)
+
+        if 'body' in kwargs:
+            body = kwargs['body']
+            for param in params:
+                kwargs[param] = body[param]
+            kwargs.pop('body')
+
         if len(kwargs) > 0:
             return method(**kwargs)
         else:

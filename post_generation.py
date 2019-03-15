@@ -1,5 +1,6 @@
 import fileinput
 import sys
+import re
 
 TARGET = sys.argv[1]
 MODULE = sys.argv[2]
@@ -13,9 +14,9 @@ import re
 
 REPLACE_TEXT = "return 'do some magic!'"
 REPLACEMENT = """
-    request_device = r'(.*) request on device (.*)'
-    pattern = re.compile(request_device)
-    
+    request_device_pattern = re.compile(r'(.*) request on device (.*)')
+    param_pattern = re.compile(r':param (.*):')
+
     function = inspect.currentframe()
     function_name = function.f_code.co_name
     arguments = function.f_code.co_varnames[0:function.f_code.co_argcount]
@@ -27,14 +28,23 @@ REPLACEMENT = """
     
     strings = [token for type, token, _, _, _ in tokenize.generate_tokens(comments.readline) if type == tokenize.STRING]
     
-    matches = pattern.search(strings[0].strip('"'))
+    matches = request_device_pattern.search(strings[0].strip('"'))
     request = matches.group(1)
     device = matches.group(2)
+
+    params = []
+
+    for line in strings[0].splitlines():
+        param_matches = param_pattern.search(line.strip('"'))
+        if param_matches != None:
+            params.append(param_matches.group(1))
        
-    return hub.invoke_implementation(function_name, kwargs, request, device)
+    return hub.invoke_implementation(function_name, params, kwargs, request, device)
  
 """
 
+FUNCTION_SIGNATURE = 'def (.*)\(.+\):  # noqa: E501'
+controller_function = re.compile(FUNCTION_SIGNATURE)
 
 filename = TARGET + '/' + MODULE + '/controllers/default_controller.py'
 
@@ -45,4 +55,8 @@ with open(filename, 'r+') as file:
 
 with fileinput.FileInput(filename, inplace=True) as file:
     for line in file:
-        print(line.replace(REPLACE_TEXT, REPLACEMENT), end='')
+        if controller_function.match(line):
+            print(controller_function.sub(r'def \1(body):  # noqa: E501', line), end='')
+        else:
+            print(line.replace(REPLACE_TEXT, REPLACEMENT), end='')
+
