@@ -2,6 +2,9 @@ from flask import jsonify
 import grovepi
 from .. import hub
 
+def init():
+    hub.PERSISTENCE['SPEED'] = 0
+    return
 
 def fan_set(body):
     target_speed = body['target_speed']

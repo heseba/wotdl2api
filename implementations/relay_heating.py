@@ -1,8 +1,12 @@
 import time
 import grovepi
 from flask import Response
+from .heating_thread import HeatingThread
 from .. import hub
 
+def init():
+    hub.PERSISTENCE['WORKER'] = HeatingThread()
+    return
 
 def activate_heating(body):
     power = body['power']
