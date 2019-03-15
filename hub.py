@@ -1,10 +1,11 @@
 import importlib
-from .models.heating_thread import HeatingThread
+
 
 IMPLEMENTATION_PATH = 'wot_api.models'
 print('hub imported')
 
-PERSISTENCE = {'SPEED': 0, 'WORKER': HeatingThread()}
+PERSISTENCE = {}
+INIT_FUNCTION_NAME = 'init'
 
 
 def invoke_implementation(function_name, kwargs, request, device):
@@ -15,11 +16,13 @@ def invoke_implementation(function_name, kwargs, request, device):
 
     if found:
         implementation = importlib.import_module(import_path)
+        if hasattr(implementation, INIT_FUNCTION_NAME):
+            plugin_init_function = getattr(implementation, INIT_FUNCTION_NAME)
+            plugin_init_function()
         if not hasattr(implementation, function_name):
             return 'Implementation required for %s of device %s' % (function_name, device)
         method = getattr(implementation, function_name)
         if len(kwargs) > 0:
-
             return method(**kwargs)
         else:
             return method()
