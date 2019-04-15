@@ -35,4 +35,4 @@ If you want to use or extend our toolchain, please consider citing the related p
 
 [1] Noura M., Heil S., Gaedke M. (2018) GrOWTH: Goal-Oriented End User Development for Web of Things Devices. In: Mikkonen T., Klamma R., Hernández J. (eds) Web Engineering. ICWE 2018. Lecture Notes in Computer Science, vol 10845. Springer, Cham
 
-[2] Noura M., Heil S., Gaedke M. (2019) Webifying Heterogenous Internet of Things Devices. Submitted to: ICWE 2019.
+[2] Noura M., Heil S., Gaedke M. (2019) Webifying Heterogenous Internet of Things Devices. To appear in: Proceedings of ICWE 2019.
