@@ -6,7 +6,7 @@ from rdflib import OWL, RDFS, Namespace
 from urllib.parse import urlparse
 from collections import defaultdict
 
-IN = 'icwe2019.ttl'
+IN = 'sample.ttl'
 
 WOTDL = Namespace('http://vsr.informatik.tu-chemnitz.de/projects/2019/growth/wotdl#')
 
@@ -97,7 +97,7 @@ open_api = {
         'version': '0.0.1',
         'title': 'TODO',
     },
-    'servers': [{'url': 'https://10.0.1.122:' + str(port) + '/api'}],
+    'servers': [{'url': 'https://10.0.1.200:' + str(port) + '/api'}],
     'paths': dict(paths)
 }
 

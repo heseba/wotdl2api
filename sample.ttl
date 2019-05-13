@@ -381,7 +381,7 @@ wotdl:Transition rdf:type owl:Class ;
   	a wotdl:HttpRequest, wotdl:Actuation;
   	wotdl:httpMethod "POST"^^xsd:string;
 	wotdl:name "fan_turn_off"^^xsd:string;
-	wotdl:url "http://10.0.1.122/fan/off"^^xsd:string.
+	wotdl:url "http://10.0.1.200/fan/off"^^xsd:string.
 
 
 <#IncreaseTemperature>
@@ -415,7 +415,7 @@ content:
         - target_speed"""^^xsd:decimal ;
     wotdl:httpMethod "POST"^^xsd:string ;
     wotdl:name "fan_set"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/fan"^^xsd:string.
+    wotdl:url "http://10.0.1.200/fan"^^xsd:string.
 
 
 <#FanOnEffect>
@@ -456,7 +456,7 @@ content:
         - increment"""^^xsd:decimal ;
     wotdl:httpMethod "POST"^^xsd:string ;
     wotdl:name "increase_fan_speed"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/fan/increase"^^xsd:string.
+    wotdl:url "http://10.0.1.200/fan/increase"^^xsd:string.
 
 
 <#DecreaseTemperature>
@@ -492,7 +492,7 @@ content:
         - decrement"""^^xsd:decimal ;
     wotdl:httpMethod "POST"^^xsd:string ;
     wotdl:name "decrease_fan_speed"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/fan/decrease"^^xsd:string.
+    wotdl:url "http://10.0.1.200/fan/decrease"^^xsd:string.
 
 
 
@@ -514,7 +514,7 @@ content:
     wotdl:measures <#AmbientLuminosity> ;
     wotdl:httpMethod "GET"^^xsd:string ;
     wotdl:name "get_light_intensity"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/ambientlight"^^xsd:string .
+    wotdl:url "http://10.0.1.200/ambientlight"^^xsd:string .
 
 <#AmbientLuminosity>
   a wotdl:Parameter;
@@ -548,7 +548,7 @@ content:
     a wotdl:HttpRequest, wotdl:Actuation ;
     wotdl:httpMethod "PUT"^^xsd:string ;
     wotdl:name "switch_off_lamp"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/lights/off"^^xsd:string .
+    wotdl:url "http://10.0.1.200/lights/off"^^xsd:string .
 
 
 <#DecreaseBrightness>
@@ -586,7 +586,7 @@ content:
     a wotdl:HttpRequest ;
     wotdl:httpMethod "PUT"^^xsd:string ;
     wotdl:name "switch_on_lamp"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/lights/on"^^xsd:string .
+    wotdl:url "http://10.0.1.200/lights/on"^^xsd:string .
 
 
 <#TurnLampOn> rdf:type wotdl:FixedValueEffect ;
@@ -605,7 +605,7 @@ content:
     wotdl:measures <#AmbientTemperature> ;
     wotdl:httpMethod "GET"^^xsd:string ;
     wotdl:name "get_temperature"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/temperature"^^xsd:string .
+    wotdl:url "http://10.0.1.200/temperature"^^xsd:string .
 
 <#AmbientTemperature>
   a wotdl:Parameter;
@@ -622,7 +622,7 @@ content:
     wotdl:measures <#AmbientHumidity> ;
     wotdl:httpMethod "GET"^^xsd:string ;
     wotdl:name "get_humidity"^^xsd:string ;
-    wotdl:url "http://10.0.1.122/humidity"^^xsd:string .
+    wotdl:url "http://10.0.1.200/humidity"^^xsd:string .
 
 <#AmbientHumidity>
   a wotdl:Parameter;
@@ -657,7 +657,7 @@ content:
         - targetTemperature"""^^xsd:string ;
   wotdl:httpMethod "PUT"^^xsd:string ;
   wotdl:name "thermostat_set"^^xsd:string ;
-  wotdl:url "http://10.0.1.122/thermostat"^^xsd:string .
+  wotdl:url "http://10.0.1.200/thermostat"^^xsd:string .
 
 <#HeatingOnEffect>
     a wotdl:FixedValueEffect ;
@@ -705,7 +705,7 @@ content:
   a wotdl:HttpRequest, wotdl:Actuation ;
   wotdl:httpMethod "POST"^^xsd:string ;
   wotdl:name "deactivate_heating"^^xsd:string ;
-  wotdl:url "http://10.0.1.122/heating/off"^^xsd:string .
+  wotdl:url "http://10.0.1.200/heating/off"^^xsd:string .
 
 
 <#DecreaseTemperature>
@@ -740,7 +740,7 @@ content:
         - power"""^^xsd:string ;
   wotdl:httpMethod "POST"^^xsd:string ;
   wotdl:name "activate_heating"^^xsd:string ;
-  wotdl:url "http://10.0.1.122/heating/on"^^xsd:string .
+  wotdl:url "http://10.0.1.200/heating/on"^^xsd:string .
 
 
 <#HeatingOnEffect>
@@ -760,3 +760,43 @@ content:
   wotdl:value "off"^^xsd:string .
 
 
+<#samsungtv>
+    a wotdl:Actuator, wotdl:Device ;
+    wotdl:hasTransition <#tvOnTransition>;
+    wotdl:hasTransition <#tvOffTransition>;
+    wotdl:name "samsung_tv"^^xsd:string ;
+    wotdl:type "tv"^^xsd:string .
+
+
+
+<#tvOnTransition>
+    a wotdl:Transition ;
+    wotdl:hasActuation <#TvOn> .
+
+
+<#tvOffTransition>
+    a wotdl:Transition ;
+    wotdl:hasActuation <#TvOff> .
+
+
+<#TvOn>
+    a wotdl:HttpRequest;
+    wotdl:httpMethod "POST"^^xsd:string ;
+    wotdl:name "switch_on_tv"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/tv/{path-param}/needed/on"^^xsd:string ;
+    wotdl:httpBody """required: true
+content:
+  application/x-www-form-urlencoded:
+    schema:
+      type: object
+      properties:
+        power:
+          type: number
+      required:
+        - power"""^^xsd:string .
+
+<#TvOff>
+    a wotdl:HttpRequest;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "switch_off_tv"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/tv/{path-param}/needed/off?queryParam1={myQueryStuff}"^^xsd:string .

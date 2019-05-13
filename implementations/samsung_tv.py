@@ -2,5 +2,5 @@ from flask import Response
 
 print('samsungTV imported')
 
-def switch_tv_on(path_param, query_param1=None):
+def switch_on_tv(path_param):
     return Response(path_param, status=200)

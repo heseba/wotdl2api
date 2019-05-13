@@ -1,9 +1,11 @@
 import fileinput
 import sys
 import re
+import yaml
 
 TARGET = sys.argv[1]
 MODULE = sys.argv[2]
+OPENAPI_FILE_NAME = sys.argv[3]
 
 IMPORT_STATEMENTS = """from .. import hub
 import inspect
@@ -43,7 +45,7 @@ REPLACEMENT = """
  
 """
 
-FUNCTION_SIGNATURE = 'def (.*)\(.+\):  # noqa: E501'
+FUNCTION_SIGNATURE = 'def (.*)\((.+)\):  # noqa: E501'
 controller_function = re.compile(FUNCTION_SIGNATURE)
 
 filename = TARGET + '/' + MODULE + '/controllers/default_controller.py'
@@ -53,10 +55,34 @@ with open(filename, 'r+') as file:
     file.seek(0, 0)
     file.write(IMPORT_STATEMENTS + '\n' + content)
 
-with fileinput.FileInput(filename, inplace=True) as file:
-    for line in file:
-        if controller_function.match(line):
-            print(controller_function.sub(r'def \1(body):  # noqa: E501', line), end='')
-        else:
-            print(line.replace(REPLACE_TEXT, REPLACEMENT), end='')
+with open(OPENAPI_FILE_NAME, 'r') as api_file:
+    api_spec = yaml.load(api_file)
+
+    with fileinput.FileInput(filename, inplace=True) as file:
+        for line in file:
+            if controller_function.match(line):
+                #def switch_on_tv(path_param, power):  # noqa: E501
+                function_name = controller_function.match(line).group(1)
+                arguments = controller_function.match(line).group(2).split(',')
+                updated_arguments = []
+                request_type = ''
+                for argument in arguments:
+                    for path in api_spec['paths']:
+                        for operation in api_spec['paths'][path]:
+                            request_type = operation
+                            if api_spec['paths'][path][operation]['operationId'] == function_name:
+                                if 'parameters' in api_spec['paths'][path][operation]:
+                                    for param in api_spec['paths'][path][operation]['parameters']:
+                                        if param['name'].replace('-', '_') == argument:
+                                            updated_arguments.append(argument.strip())
+                                break
+                if request_type in ['post', 'put']:
+                    updated_arguments.append('body')
+                updated_argument_list = ', '.join(updated_arguments)
+                print(controller_function.sub(r'def \1(' + updated_argument_list + '):  # noqa: E501', line), end='')
+            else:
+                print(line.replace(REPLACE_TEXT, REPLACEMENT), end='')
+
+
+#TODO: in __main__.py add custom resolver
 

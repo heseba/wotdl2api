@@ -26,7 +26,8 @@ def invoke_implementation(function_name, params, kwargs, request, device):
         if 'body' in kwargs:
             body = kwargs['body']
             for param in params:
-                kwargs[param] = body[param]
+                if param not in kwargs:
+                    kwargs[param] = body[param]
             kwargs.pop('body')
 
         if len(kwargs) > 0:
