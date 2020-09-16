@@ -5,11 +5,12 @@ from .heating_thread import HeatingThread
 from .. import hub
 
 def init():
-    hub.PERSISTENCE['WORKER'] = HeatingThread()
+    if not 'WORKER' in hub.PERSISTENCE:
+        hub.PERSISTENCE['WORKER'] = HeatingThread()
     return
 
-def activate_heating(body):
-    power = body['power']
+def activate_heating(power):
+    #power = body['power']
     if power < .2 or power > 1:
         raise ValueError
     else:

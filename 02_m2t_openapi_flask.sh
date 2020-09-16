@@ -7,7 +7,7 @@ PYTHON_PATH=/Users/mahda/.local/share/virtualenvs/wotdl2api-iHq_-KG6/bin
 PI_PYTHON_PATH=/home/pi/.local/share/virtualenvs/wotdl2api-experiment-bAUvETzh/bin
 TARGET=flask_out
 PI_IP=10.0.1.200
-DEPLOY_ON_PI=false
+DEPLOY_ON_PI=true
 
 ( set -x ; ${GENERATOR_PATH}/openapi-generator generate -i ${API} -g python-flask -o ${TARGET} -c config.json)
 ( set -x ; ${PYTHON_PATH}/python3 post_generation.py ${TARGET} ${MODULE} ${API})
@@ -25,6 +25,7 @@ if $DEPLOY_ON_PI ; then
     ( set -x ;ssh -t pi@${PI_IP} "cd /home/pi/wotdl2api-experiment ; exec ${PI_PYTHON_PATH}/python3 -m ${MODULE}")
 else
     echo running API locally, open http://0.0.0.0:${PORT}/api/ui in your browser
-    ( set -x ; cd ${TARGET}; ${PYTHON_PATH}/python3 -m ${MODULE})
+    ( set -x ; cd ${TARGET};
+    ${PYTHON_PATH}/python3 -m ${MODULE})
 fi
 

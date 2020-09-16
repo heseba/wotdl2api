@@ -3,7 +3,7 @@ import grovepi
 
 print('light_sensor imported')
 
-def get_light_intensity(a=1):
+def get_light_intensity_grove(a=1):
     light_sensor = 2
     threshold = 10
     sum = 0

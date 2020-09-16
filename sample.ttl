@@ -502,23 +502,37 @@ content:
   wotdl:decrement "1"^^xsd:decimal.
 
 
-<#light>
+<#GroveLight>
     a wotdl:Sensor ;
-    wotdl:hasMeasurement <#LightM>;
-    wotdl:name "light_sensor"^^xsd:string ;
-    wotdl:type "fan".
+    wotdl:hasMeasurement <#GroveLightM>;
+    wotdl:name "grove_digital_light_sensor"^^xsd:string ;
+    wotdl:type "light".
 
 
-<#LightM>
+<#GroveLightM>
     a wotdl:HttpRequest , wotdl:Measurement ;
     wotdl:measures <#AmbientLuminosity> ;
     wotdl:httpMethod "GET"^^xsd:string ;
-    wotdl:name "get_light_intensity"^^xsd:string ;
-    wotdl:url "http://10.0.1.200/ambientlight"^^xsd:string .
+    wotdl:name "get_light_intensity_grove"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/ambientlight/1"^^xsd:string .
 
 <#AmbientLuminosity>
   a wotdl:Parameter;
   wotdl:name "AmbientLuminosity".
+
+<#BHLight>
+    a wotdl:Sensor ;
+    wotdl:hasMeasurement <#BHLightM>;
+    wotdl:name "bh1750_digital_light_sensor"^^xsd:string ;
+    wotdl:type "light".
+
+
+<#BHLightM>
+    a wotdl:HttpRequest , wotdl:Measurement ;
+    wotdl:measures <#AmbientLuminosity> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "get_light_intensity_bh1750"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/ambientlight/2"^^xsd:string .
 
   <#PhilipsHue>
     a wotdl:CompositeDevice ;
@@ -547,8 +561,8 @@ content:
 <#LampOff>
     a wotdl:HttpRequest, wotdl:Actuation ;
     wotdl:httpMethod "PUT"^^xsd:string ;
-    wotdl:name "switch_off_lamp"^^xsd:string ;
-    wotdl:url "http://10.0.1.200/lights/off"^^xsd:string .
+    wotdl:name "switch_off_hue_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/lights/1/off"^^xsd:string .
 
 
 <#DecreaseBrightness>
@@ -585,8 +599,8 @@ content:
 <#LampOn>
     a wotdl:HttpRequest ;
     wotdl:httpMethod "PUT"^^xsd:string ;
-    wotdl:name "switch_on_lamp"^^xsd:string ;
-    wotdl:url "http://10.0.1.200/lights/on"^^xsd:string .
+    wotdl:name "switch_on_hue_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/lights/1/on"^^xsd:string .
 
 
 <#TurnLampOn> rdf:type wotdl:FixedValueEffect ;
@@ -597,15 +611,15 @@ content:
 <#temperature>
     a wotdl:Sensor ;
     wotdl:hasMeasurement <#TemperatureM>;
-  wotdl:name "temperature_humidity_sensor"^^xsd:string ;
+  wotdl:name "grove_temperature_humidity_sensor"^^xsd:string ;
     wotdl:type "temperature".
 
 <#TemperatureM>
     a wotdl:HttpRequest , wotdl:Measurement ;
     wotdl:measures <#AmbientTemperature> ;
     wotdl:httpMethod "GET"^^xsd:string ;
-    wotdl:name "get_temperature"^^xsd:string ;
-    wotdl:url "http://10.0.1.200/temperature"^^xsd:string .
+    wotdl:name "get_temperature_grove"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/temperature/1"^^xsd:string .
 
 <#AmbientTemperature>
   a wotdl:Parameter;
@@ -800,3 +814,118 @@ content:
     wotdl:httpMethod "GET"^^xsd:string ;
     wotdl:name "switch_off_tv"^^xsd:string ;
     wotdl:url "http://10.0.1.200/tv/{path-param}/needed/off?queryParam1={myQueryStuff}"^^xsd:string .
+
+<#GrovePir>
+    a wotdl:Sensor ;
+    wotdl:hasMeasurement <#Movement>;
+    wotdl:name "grove_pir_motion_sensor"^^xsd:string ;
+    wotdl:type "motion".
+
+<#Movement>
+    a wotdl:HttpRequest , wotdl:Measurement ;
+    wotdl:measures <#Motion> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "get_motion_grove"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/motion/1"^^xsd:string .
+
+<#Motion>
+  a wotdl:Parameter;
+  wotdl:name "Motion".
+
+<#LedvanceMotionSensor>
+    a wotdl:Sensor ;
+    wotdl:hasMeasurement <#MotionMovement> , <#CurrentTemperature>;
+    wotdl:name "ledvance_motion_sensor"^^xsd:string ;
+    wotdl:type "motion".
+
+<#MotionMovement>
+    a wotdl:HttpRequest , wotdl:Measurement ;
+    wotdl:measures <#Motion> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "get_motion_ledvance"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/motion/2"^^xsd:string .
+
+<#CurrentTemperature>
+    a wotdl:HttpRequest , wotdl:Measurement ;
+    wotdl:measures <#Temperature> ;
+    wotdl:httpMethod "GET"^^xsd:string ;
+    wotdl:name "get_temperature_ledvance"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/temperature/2"^^xsd:string .
+
+<#TintLamp>
+    a wotdl:CompositeDevice ;
+    wotdl:hasActuator <#TintLampActuator> ;
+    wotdl:name "tint_bulb"^^xsd:string ;
+    wotdl:type "lamp"^^xsd:string .
+
+
+<#TintLampActuator>
+    a wotdl:Actuator ;
+    wotdl:name "tint_bulb"^^xsd:string ;
+    wotdl:hasTransition <#TintLampOffTransition> , <#TintLampOnTransition>.
+
+<#TintLampOffTransition>
+    a wotdl:Transition ;
+    wotdl:hasPreCondition <#LampOffPrecondition>;
+    wotdl:hasActuation <#TintLampOff> ;
+    wotdl:hasEffect <#DecreaseBrightness> , <#TurnLampOff> .
+
+
+<#TintLampOff>
+    a wotdl:HttpRequest, wotdl:Actuation ;
+    wotdl:httpMethod "PUT"^^xsd:string ;
+    wotdl:name "switch_off_tint_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/lights/2/off"^^xsd:string .
+
+
+<#TintLampOnTransition>
+    a wotdl:Transition ;
+    wotdl:hasPreCondition <#LampOnPrecondition> ;
+    wotdl:hasActuation <#TintLampOn> ;
+    wotdl:hasEffect <#IncreaseBrightness> , <#TurnLampOn> .
+
+
+<#TintLampOn>
+    a wotdl:HttpRequest ;
+    wotdl:httpMethod "PUT"^^xsd:string ;
+    wotdl:name "switch_on_tint_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/lights/2/on"^^xsd:string .
+
+<#OsramLamp>
+    a wotdl:CompositeDevice ;
+    wotdl:hasActuator <#OsramLampActuator> ;
+    wotdl:name "osram_bulb"^^xsd:string ;
+    wotdl:type "lamp"^^xsd:string .
+
+
+<#OsramLampActuator>
+    a wotdl:Actuator ;
+    wotdl:name "osram_bulb"^^xsd:string ;
+    wotdl:hasTransition <#OsramLampOffTransition> , <#OsramLampOnTransition>.
+
+<#OsramLampOffTransition>
+    a wotdl:Transition ;
+    wotdl:hasPreCondition <#LampOffPrecondition>;
+    wotdl:hasActuation <#OsramLampOff> ;
+    wotdl:hasEffect <#DecreaseBrightness> , <#TurnLampOff> .
+
+
+<#OsramLampOff>
+    a wotdl:HttpRequest, wotdl:Actuation ;
+    wotdl:httpMethod "PUT"^^xsd:string ;
+    wotdl:name "switch_off_osram_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/lights/3/off"^^xsd:string .
+
+
+<#OsramLampOnTransition>
+    a wotdl:Transition ;
+    wotdl:hasPreCondition <#LampOnPrecondition> ;
+    wotdl:hasActuation <#OsramLampOn> ;
+    wotdl:hasEffect <#IncreaseBrightness> , <#TurnLampOn> .
+
+
+<#OsramLampOn>
+    a wotdl:HttpRequest ;
+    wotdl:httpMethod "PUT"^^xsd:string ;
+    wotdl:name "switch_on_osram_lamp"^^xsd:string ;
+    wotdl:url "http://10.0.1.200/lights/3/on"^^xsd:string .
