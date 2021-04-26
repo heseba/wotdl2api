@@ -14,7 +14,8 @@ The Flask-based REST API is generated using [OpenAPI Generator](https://openapi-
 ## Usage
 Get the dependencies:
 ```
-pip install -r requirements.txt
+pipenv install
+pipenv shell
 ```
 
 Adapt the IN variable to point to your ontology instance and run the model-to-model transformation:
