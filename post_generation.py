@@ -69,8 +69,9 @@ with open(OPENAPI_FILE_NAME, 'r') as api_file:
                 for argument in arguments:
                     for path in api_spec['paths']:
                         for operation in api_spec['paths'][path]:
-                            request_type = operation
+                            #move the assignment of request_type into the if statement                            
                             if api_spec['paths'][path][operation]['operationId'] == function_name:
+                                request_type = operation
                                 if 'parameters' in api_spec['paths'][path][operation]:
                                     for param in api_spec['paths'][path][operation]['parameters']:
                                         if param['name'].replace('-', '_') == argument:
